@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F4432">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kegelbuch">
+<meta name="format-detection" content="telephone=no">
+<title>Kegelbuch</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%231F4432'/%3E%3Ctext%20x='50'%20y='70'%20font-family='Georgia,serif'%20font-size='58'%20font-weight='700'%20fill='%23F3F4EE'%20text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAH8UlEQVR42u3de1AU9wHA8VtEQEJUND4isSBPj/fj5BEQFWE0GamNVYe0VXAmVASLScRRhEYCGI1NU+LEWEhojcQHEFAjGlGhVUuMxgTE0EmMVXygxhcSngf36B92aEYJwi6Z4Xa/n7+8vd31fst3fv72xuME+0h/FdATMy4BiAPEAeIAcYA4QBwgDhAHiAPEARAHiAPEAeIAcYA4QBwgDhAHiAMgDhAHiAPEAeIAcYA4QBwgDhAHQBwgDhAHiAPEAeIAcYA4QBwgDhAHQBwgDhAHiAPEAeIAcYA4QBwgDqCb+SB/fc9NnREeEOg00X6S3S+GWVkN7Mm7dLo9FYcyt+b0cf8502aGa4LcHV0c7CZK/KvvNd2f/2rCrbt3BvPFF0zl2yEFQZgwdlywt3/c3AWTnhH5szEYDFU1Z744d/bitSuXGq5cvXnDYDCIOI+rg+Oi6Hm/ipglCEJ/j718vSG/dPeB4xXazs7Bfs1N7qtDx45+qjJ/t7hjl6Sv/OLrswP1SgK9fDenZtpYW/dx/6aW5ncK8kuOfqrX61lz/CykTMUDWIZKpTp9rmb5+nSj0diXncurjkUnLSkqLzOVMliQSnWmrnZvRXnv+2g7teu2vL3yT1n3mu5zt6IsxYcP9PLslRsNMSlJJUcOcreiRF9f+LZLpxtq3sOV/Ly2+pU3X29ubeF9DoUyGAx37zc+un3P0UNLX19jumUwcwwMK0vLh7ZsLSzYsutDUx8XcUg13ObJETZPdj80Go1vvP/uroP7ZDA04pDK1829+60wvV6ftnlT2bEKeQyNOKR6PjziwR86u7pS3sqqPPWZbIZGHJKMHmkbFRKmUqm0ndrkDeuqqs/IaXTEIUnSi7GWFpYdWm1idtrpczUyGx1xiOen9pgf9Xx7R8eyrLVn6mrlN0DiEMnG+omNr6R2dGqXZa798t/nZDlG4hB11YaY56zJGDV8ZEJmqlzLUPEOqQiCIGQnp/i4qpdlrZVxGcwcYqyMjZ8VOj0xO02W6wxmDvFi585fPHfBmr9sOFnzpewHSxz9MGfazJS4petzN5dXHVPCeImjr0L9NNnJq97bvb3w0H6FDJk4+sTTxS1ndUbRobKthQXKGTVxPJ7DhGe2/vGN1va2DR9sUdTAieMxxtiOys3YaDt8xFO2o5wn2hMH/sfG+oncdRvtxo5/8HBZzGLigEqlUlkMHfpuWparg2P3lqiQqS72k4hD6cwEYdOraRoP7x9vFAQhUUmTB3H0LD1hRWRI2KPbI4PD3ByciEO5EmMWL5w1p8enBEFIjFlEHAq1cHZ07/92RASFTp7kRByKExkS9lrCit73EQRBIbctxPF/Gg/vnNUZfdlzZlCo2tGZOJTC1cFx2/q3+7UuIQ5FsBs7vjQnr1+HzAh81t3JhThkznb4iPK8j8Td1BCHnFlbDTuxvUTcsdOnhHg4uxKHPJkPMS97b5uUMyTFxBKHDAmCkJ28qrm15dv6/4g+SbgmyNPFjTjkJiVuaYC7V3zG6k1/+6uU88h45aHQOJa8sPCXM6LiM1bfunvnVG11zTd14iePgCAvl8nEIRPR06OWLvhdQmZqfcPVB1tyi3ZIWnm8GEsccjDVP/C1hBUvb1xXd+F898YTX53+8cP+CvOf4uOmJg7T5u2qfmtV+tp33vy8tvqhp3KLP5Jy5kQ53rYoK44t6dl/3pZ35OSJR5/6x+mT5+svij5zqJ/Gx82dOExYwf7SovKyHp8yGo25xZJWHstlt/JQVhx5vf74j3x2/NK1q6JPHuIb4DvZgzjkyWA05n28k9sW4ujZgeMVV29eFz95+Pj7qz2JQ6aTh8HwQcluKWeQ0+RBHA/bV3n4xu1bog8P8vYLcPciDnnS6XX5pUwexPETSo9+ervxnujDA718H/o0FHHIR2dX19/3FEo5w/LfxBGHbBWVlzX+0CT6cI2H9xRPH+KQpw6t9sN9xQpfeRDHT9p18JOmlmYpk0eQtx9xyFNre9uOsj1KnjyIozcF+0tb2tpEH+6v9gw25cmDOHrT3Nqy6+BeaZNHHHHI1vZPSto7OkQf7qf2CPENIA55avyhqbBc0i8eNd3/50Ecj7dtb7G2s1P04T5u7s/6aohDnu403pP4ldImettCHH2SX1rYpdNJmDzUYf5TiEOevr97e1/lYSlnMMUPxhFHX71fslOv14s+3NtVPdU/kDjkqeH7mxK/TdjkVh7E0Z/J4+OdBqNR9OGeLm7hmiDikKf669fK//VPSZOHSX0wjjj6J694h1HC5OHh7DpNE0wc8vTdlfrKU1USVx6CIBCHTCcPaR98cndyeS5sBnHIU92F81J+U5RKpVoZF29tNYw4Bp6UT4XYT7AbkNdw885tKYePGz0mNT5p8F/qISMdnx7s/QrChHHj/SZ7RASHvvTrmOTfLjEzE9n0zKAwQRDa2tuaWpr7u640E4SJT9v5qT1fiJw9N2KWxHWD2tF5zKjRp2qrdRLeWPu5CfaR/oO5jLTf/2Fe5GxLC8uBPW2XTnfx2uXvLl86efarvrwv/vKilxZFz7O0sBjYl9HW0V7zTV1u0Y7B+bXngz0OsOYAcYA4QBwgDhAHQBwgDhAHiAPEAeIAcYA4QBwgDoA4QBwgDhAHiAPEAeIAcYA4QBwgDi4BiAPEAeIAcYA4QBwgDhAHiAPEARAHiAPEAeIAcYA4QBwgDhAHiAMgDhAHxPsvm0lOLrWAzZ8AAAAASUVORK5CYII=">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-bg: #F3F4EE;
+  --color-surface: #FFFFFF;
+  --color-ink: #17231C;
+  --color-ink-soft: #5C6B62;
+  --color-ink-faint: #8B968E;
+  --color-primary: #1F4432;
+  --color-primary-soft: #E3EBE5;
+  --color-accent: #B87A2E;
+  --color-accent-soft: #F3E6D2;
+  --color-alert: #A63A32;
+  --color-alert-soft: #F3DFDC;
+  --color-line: #DEDBCC;
+  --color-gold: #C9A227;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-card: 16px;
+  --radius-control: 10px;
+  --radius-pill: 999px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; overscroll-behavior: none; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-ink);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-appearance: none; appearance: none; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+button:disabled { opacity: 0.45; cursor: default; }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: -webkit-fill-available;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.top-bar { flex: 0 0 auto; padding: calc(16px + env(safe-area-inset-top, 0px)) 20px 14px; border-bottom: 1px solid var(--color-line); background: var(--color-bg); }
+.wordmark { font-family: var(--font-display); font-weight: 600; font-size: 21px; color: var(--color-primary); }
+
+#app { flex: 1 1 auto; overflow-y: auto; padding: 18px 16px 28px; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
+
+.bottom-nav { flex: 0 0 auto; display: flex; border-top: 1px solid var(--color-line); background: var(--color-surface); padding-bottom: env(safe-area-inset-bottom, 0); }
+.nav-btn { flex: 1; border: none; background: none; padding: 12px 6px 10px; font-size: 12.5px; font-weight: 500; color: var(--color-ink-faint); border-top: 2px solid transparent; }
+.nav-btn.is-active { color: var(--color-primary); border-top-color: var(--color-primary); font-weight: 600; }
+
+.view-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.view-header h1 { font-family: var(--font-display); font-weight: 600; font-size: 23px; margin: 0; color: var(--color-ink); }
+
+/* Type toggle */
+.type-toggle { display: flex; gap: 8px; margin-bottom: 20px; }
+.type-btn { flex: 1; padding: 14px 8px; border: 1.5px solid var(--color-line); border-radius: var(--radius-control); background: var(--color-surface); font-weight: 600; font-size: 15px; color: var(--color-ink-soft); }
+.type-btn--wettkampf.is-active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.type-btn--training.is-active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+/* Field groups */
+.field-group { margin-bottom: 16px; flex: 1; min-width: 0; }
+.field-row { display: flex; gap: 12px; }
+.field-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-ink-soft); margin-bottom: 6px; }
+.field-label .hint { font-weight: 400; color: var(--color-ink-faint); }
+
+.text-input, .number-input, .select-input {
+  width: 100%; padding: 11px 12px; border: 1.5px solid var(--color-line); border-radius: var(--radius-control);
+  background: var(--color-surface); font-size: 16px;
+  -webkit-appearance: none; appearance: none; margin: 0; min-width: 0;
+}
+.select-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235C6B62' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 12px 8px; padding-right: 34px;
+}
+input[type="date"].text-input { display: block; min-height: 48px; text-align: left; }
+input[type="date"]::-webkit-date-and-time-value { text-align: left; margin: 0; }
+input[type="date"]::-webkit-datetime-edit { padding: 0; }
+textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
+.text-input:focus, .number-input:focus, .select-input:focus { border-color: var(--color-primary); }
+.number-input { font-family: var(--font-display); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Mode + location chips */
+.mode-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.mode-chip-wrap { position: relative; display: inline-flex; }
+.mode-chip { padding: 9px 16px; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); background: var(--color-surface); font-size: 14px; font-weight: 500; color: var(--color-ink-soft); }
+.mode-chip--active { border-color: var(--color-ink); background: var(--color-ink); color: #fff; }
+.mode-chip--add { border-style: dashed; color: var(--color-ink-faint); }
+.mode-chip__del {
+  position: absolute; top: -7px; right: -7px; width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--color-bg); background: var(--color-alert); color: #fff; font-size: 12px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.mode-chip__del::after { content: ''; position: absolute; top: -10px; right: -10px; bottom: -10px; left: -10px; }
+
+.new-mode-form { display: flex; gap: 8px; margin: 8px 0 16px; flex-wrap: wrap; }
+.new-mode-form .text-input { width: auto; flex: 1 1 120px; }
+
+/* Lane cards */
+.lanes-wrap { margin-top: 4px; }
+.lane-card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 14px 16px 6px; margin-bottom: 12px; }
+.lane-card__title { font-family: var(--font-display); font-weight: 600; font-size: 16px; margin-bottom: 10px; color: var(--color-primary); }
+.lane-card__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.lane-card__row label { font-size: 13px; color: var(--color-ink-soft); flex: 1; }
+.lane-card__row .hint { display: block; font-size: 11px; color: var(--color-ink-faint); }
+.lane-card__row .number-input { width: 92px; text-align: right; flex: 0 0 auto; }
+
+/* Save bar / buttons */
+.save-bar { display: flex; gap: 10px; margin-top: 20px; padding-top: 4px; }
+.btn { padding: 13px 20px; border-radius: var(--radius-control); border: 1.5px solid transparent; font-weight: 600; font-size: 15px; flex: 1; }
+.btn--primary { background: var(--color-primary); color: #fff; }
+.btn--ghost { background: transparent; border-color: var(--color-line); color: var(--color-ink-soft); }
+.btn--danger { background: transparent; border-color: var(--color-alert); color: var(--color-alert); }
+.btn--small { padding: 8px 14px; font-size: 13px; flex: 0 0 auto; }
+
+/* Filter + sort bar */
+.filter-bar { margin-bottom: 10px; }
+.filter-toggle { display: flex; gap: 6px; margin-bottom: 8px; }
+.filter-toggle__btn { flex: 1; padding: 8px 4px; border-radius: var(--radius-pill); border: 1.5px solid var(--color-line); background: var(--color-surface); font-size: 13px; font-weight: 500; color: var(--color-ink-soft); }
+.filter-toggle__btn.is-active { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
+.filter-selects { display: flex; gap: 8px; }
+.filter-selects .select-input { padding: 8px 30px 8px 10px; font-size: 13px; background-position: right 10px center; }
+.sort-row { display: flex; gap: 8px; align-items: center; margin: 0 0 16px; }
+.sort-row .select-input { flex: 1; padding: 8px 30px 8px 10px; font-size: 13px; background-position: right 10px center; }
+.breakdown-toggle { display: flex; gap: 6px; margin: 2px 0 10px; }
+
+/* Selection mode */
+.selection-bar { display: flex; justify-content: space-between; align-items: center; background: var(--color-primary-soft); border-radius: var(--radius-control); padding: 10px 14px; margin-bottom: 12px; }
+.selection-bar span { font-size: 13px; font-weight: 600; color: var(--color-primary); }
+.entry-card__checkbox { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--color-line); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; font-size: 13px; color: #fff; background: var(--color-surface); }
+.entry-card.is-selected .entry-card__checkbox { background: var(--color-primary); border-color: var(--color-primary); }
+
+/* Entry list */
+.entry-card {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; text-align: left;
+  background: var(--color-surface); border: 1px solid var(--color-line); border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-card); padding: 14px 16px; margin-bottom: 10px; font: inherit;
+}
+.entry-card.is-training { border-left-color: var(--color-accent); }
+.entry-card__main { flex: 1; min-width: 0; }
+.entry-card__meta { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.entry-card__date { font-size: 13px; color: var(--color-ink-soft); font-weight: 500; }
+.tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-pill); background: var(--color-primary-soft); color: var(--color-primary); }
+.tag.is-training { background: var(--color-accent-soft); color: var(--color-accent); }
+.entry-card__mode { font-size: 13px; color: var(--color-ink-faint); }
+.entry-card__score { font-family: var(--font-display); font-weight: 700; font-size: 26px; color: var(--color-ink); font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+
+.entry-detail { background: var(--color-surface); border: 1px solid var(--color-line); border-top: none; border-radius: 0 0 var(--radius-card) var(--radius-card); margin-top: -14px; padding: 4px 16px 16px; margin-bottom: 10px; }
+.entry-detail__grid { display: flex; gap: 20px; margin: 10px 0; flex-wrap: wrap; }
+.detail-label { display: block; font-size: 11px; color: var(--color-ink-faint); }
+.detail-value { display: block; font-family: var(--font-display); font-weight: 600; font-size: 18px; }
+.lane-breakdown { border-top: 1px solid var(--color-line); padding-top: 8px; margin-top: 4px; }
+.lane-breakdown__row { display: flex; justify-content: space-between; font-size: 13px; color: var(--color-ink-soft); padding: 4px 0; }
+.entry-detail__actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.notes-display { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--color-line); font-size: 13px; color: var(--color-ink-soft); font-style: italic; }
+
+/* Summary tiles */
+.summary-tiles { display: flex; gap: 10px; margin-bottom: 20px; }
+.summary-tile { flex: 1; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 12px 8px; text-align: center; }
+.summary-tile__value { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--color-primary); }
+.summary-tile__label { font-size: 11px; color: var(--color-ink-faint); margin-top: 2px; }
+
+/* Comparison tiles */
+.compare-tiles { display: flex; gap: 10px; margin-bottom: 16px; }
+.compare-tile { flex: 1; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 12px; text-align: center; }
+.compare-tile__label { font-size: 12px; color: var(--color-ink-soft); font-weight: 600; margin-bottom: 4px; }
+.compare-tile__value { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--color-primary); }
+.compare-tile__count { font-size: 11px; color: var(--color-ink-faint); margin-top: 2px; }
+
+/* Point detail panel */
+.point-detail { background: var(--color-surface); border: 1.5px solid var(--color-primary); border-radius: var(--radius-card); padding: 14px 16px; margin-bottom: 16px; }
+.point-detail__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; color: var(--color-ink-soft); }
+.point-detail__close { background: none; border: none; font-size: 20px; line-height: 1; color: var(--color-ink-faint); padding: 0; flex: 0 0 auto; }
+
+/* Goal */
+.goal-bar { height: 10px; border-radius: var(--radius-pill); background: var(--color-primary-soft); overflow: hidden; margin: 8px 0 6px; }
+.goal-bar__fill { height: 100%; background: var(--color-primary); border-radius: var(--radius-pill); }
+.goal-bar__label { font-size: 12px; color: var(--color-ink-soft); }
+.goal-form { display: flex; gap: 8px; flex-wrap: wrap; }
+.goal-form .select-input { flex: 1 1 150px; }
+.goal-form .number-input { flex: 0 0 90px; }
+.goal-active { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.goal-active__text { font-size: 14px; }
+
+/* Location stats */
+.location-stats-list { padding-top: 4px; }
+.location-stats-row { display: flex; justify-content: space-between; padding: 7px 4px; font-size: 14px; border-bottom: 1px solid var(--color-line); }
+.location-stats-row:last-child { border-bottom: none; }
+.location-stats-row__value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Charts */
+.chart-block { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 14px 12px; margin-bottom: 14px; }
+.chart-block__title { font-size: 13px; font-weight: 600; color: var(--color-ink-soft); margin-bottom: 6px; padding-left: 4px; }
+.line-chart { width: 100%; height: auto; display: block; }
+.chart-axis { stroke: var(--color-line); stroke-width: 1; }
+.chart-line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart-trend { fill: none; stroke-width: 1.5; stroke-dasharray: 4 3; opacity: 0.55; }
+.chart-best-ring { fill: none; stroke: var(--color-gold); stroke-width: 2; }
+.chart-point-selected { fill: none; stroke-width: 2; }
+.chart-label { font-size: 9px; fill: var(--color-ink-faint); font-family: var(--font-body); }
+.chart-empty { padding: 20px 0; text-align: center; color: var(--color-ink-faint); font-size: 13px; }
+.chart-hint { font-size: 11px; color: var(--color-ink-faint); text-align: center; margin: -4px 0 4px; }
+
+/* Settings / Mehr view */
+.settings-section { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 16px; margin-bottom: 14px; }
+.settings-section__title { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--color-primary); margin-bottom: 6px; }
+.settings-hint { font-size: 13px; color: var(--color-ink-soft); margin: 0 0 12px; line-height: 1.5; }
+.settings-section .btn { width: 100%; }
+.export-reminder { font-size: 12px; color: var(--color-accent); background: var(--color-accent-soft); border-radius: var(--radius-control); padding: 8px 10px; margin: 0 0 12px; }
+
+/* Empty / loading states */
+.empty-state, .loading-state { text-align: center; color: var(--color-ink-faint); padding: 60px 20px; font-size: 14px; line-height: 1.6; }
+
+/* Toast */
+.toast {
+  position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--color-ink); color: #fff;
+  padding: 10px 14px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none;
+  transition: opacity .2s, transform .2s; z-index: 100; max-width: 92%; text-align: center;
+  display: flex; align-items: center; gap: 4px; justify-content: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.toast__action { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 4px 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; margin-left: 6px; flex: 0 0 auto; }
+
+/* Dialog (ersetzt alert/confirm) */
+.dialog-backdrop { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 200; background: rgba(23,35,28,0.45); display: flex; align-items: center; justify-content: center; padding: 24px calc(20px + env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) calc(20px + env(safe-area-inset-left, 0px)); }
+.dialog-backdrop[hidden] { display: none; }
+.dialog { width: 100%; max-width: 360px; background: var(--color-surface); border-radius: var(--radius-card); padding: 20px 18px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+.dialog__msg { margin: 0 0 18px; font-size: 15px; line-height: 1.5; color: var(--color-ink); white-space: pre-line; }
+.dialog__actions { display: flex; gap: 10px; }
+.dialog__actions .btn[hidden] { display: none; }
+
+/* Unsichtbares, aber auf iOS zuverlässig auslösbares Datei-Feld */
+.file-input-hidden { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; left: -9999px; }
+
+/* iOS: Eingabefelder unter 16px lösen beim Antippen Zoom aus */
+@supports (-webkit-touch-callout: none) {
+  .text-input, .number-input, .select-input,
+  .filter-selects .select-input, .sort-row .select-input { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<div id="root">
+  <header class="top-bar"><span class="wordmark">Kegelbuch</span></header>
+  <main id="app"></main>
+  <nav class="bottom-nav">
+    <button type="button" class="nav-btn" data-action="nav" data-view-name="neu">Neu</button>
+    <button type="button" class="nav-btn" data-action="nav" data-view-name="verlauf">Verlauf</button>
+    <button type="button" class="nav-btn" data-action="nav" data-view-name="statistik">Statistik</button>
+    <button type="button" class="nav-btn" data-action="nav" data-view-name="mehr">Mehr</button>
+  </nav>
+</div>
+<div id="toast" class="toast"></div>
+<div id="dialog" class="dialog-backdrop" hidden>
+  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialog-msg">
+    <p id="dialog-msg" class="dialog__msg"></p>
+    <div class="dialog__actions">
+      <button type="button" class="btn btn--ghost" id="dialog-cancel">Abbrechen</button>
+      <button type="button" class="btn btn--primary" id="dialog-ok">OK</button>
+    </div>
+  </div>
+</div>
+<input type="file" id="import-file-input" accept=".json,application/json,text/plain" class="file-input-hidden" tabindex="-1" aria-hidden="true">
+
+<script>
+/* ---------- Konstanten ---------- */
+var CLASSIC_MODES = {
+  klassisch120: { id: 'klassisch120', name: 'Klassisch 120 Wurf', lanes: 4, volleThrows: 15, totalThrows: 30 },
+  klassisch100: { id: 'klassisch100', name: 'Klassisch 100 Wurf', lanes: 2, volleThrows: 25, totalThrows: 50 }
+};
+var LANE_COLORS = ['#1F4432', '#B87A2E', '#5B7B9A', '#8B4A6B', '#C0562E', '#3F6B4E'];
+var DEFAULT_TRAINING_LOCATION = 'Ammendorf';
+var TREND_WINDOW = 3;
+
+/* ---------- Plattform ---------- */
+var IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+var IS_STANDALONE = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+
+/* ---------- Dialoge: ersetzen alert/confirm, die auf iOS blockiert oder unterdrueckt werden koennen ---------- */
+var dialogResolve = null;
+function openDialog(msg, isConfirm) {
+  return new Promise(function (resolve) {
+    if (dialogResolve) dialogResolve(false);
+    dialogResolve = resolve;
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    document.getElementById('dialog-msg').textContent = msg;
+    document.getElementById('dialog-cancel').hidden = !isConfirm;
+    document.getElementById('dialog-ok').textContent = isConfirm ? 'OK' : 'Verstanden';
+    document.getElementById('dialog').hidden = false;
+  });
+}
+function closeDialog(result) {
+  document.getElementById('dialog').hidden = true;
+  var r = dialogResolve; dialogResolve = null;
+  if (r) r(result);
+}
+function appAlert(msg) { return openDialog(msg, false); }
+function appConfirm(msg) { return openDialog(msg, true); }
+
+/* ---------- Hilfsfunktionen ---------- */
+function todayISO() {
+  var d = new Date();
+  var local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function formatDateDisplay(iso) { var p = iso.split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
+function formatDateShort(iso) { var p = iso.split('-'); return p[2] + '.' + p[1] + '.'; }
+
+function makeEmptyLanes(modeId) {
+  var mode = CLASSIC_MODES[modeId];
+  if (!mode) return [];
+  var arr = [];
+  for (var i = 0; i < mode.lanes; i++) arr.push({ volle: '', total: '', fehlwuerfe: '' });
+  return arr;
+}
+
+function lanesToFormLanes(lanes) {
+  var running = 0;
+  return lanes.map(function (l) {
+    running += (Number(l.fehlwuerfe) || 0);
+    return { volle: String(l.volle), total: String(l.total), fehlwuerfe: String(running) };
+  });
+}
+
+function isCustomMode(modeId) { return !CLASSIC_MODES[modeId]; }
+function getModeName(modeId) {
+  if (CLASSIC_MODES[modeId]) return CLASSIC_MODES[modeId].name;
+  var cm = state.customModes.find(function (m) { return m.id === modeId; });
+  return cm ? cm.name : 'Gelöschter Modus';
+}
+
+function movingAverage(values, windowSize) {
+  var result = [];
+  for (var i = 0; i < values.length; i++) {
+    var start = Math.max(0, i - windowSize + 1);
+    var slice = values.slice(start, i + 1);
+    result.push(slice.reduce(function (a, b) { return a + b; }, 0) / slice.length);
+  }
+  return result;
+}
+
+/* ---------- Speicher-Adapter: Claude-Speicher, sonst lokaler Browser-Speicher ---------- */
+function hasNativeStorage() {
+  try { return typeof window !== 'undefined' && !!window.storage && typeof window.storage.get === 'function'; }
+  catch (e) { return false; }
+}
+
+var storageAdapter = {
+  get: async function (key) {
+    if (hasNativeStorage()) {
+      try { var res = await window.storage.get(key, false); return res ? res.value : null; }
+      catch (e) { return null; }
+    }
+    try { return localStorage.getItem('kb_' + key); } catch (e) { return null; }
+  },
+  set: async function (key, value) {
+    if (hasNativeStorage()) {
+      try { await window.storage.set(key, value, false); return true; } catch (e) { return false; }
+    }
+    try { localStorage.setItem('kb_' + key, value); return true; } catch (e) { return false; }
+  }
+};
+
+/* ---------- Zustand ---------- */
+var state = {
+  view: 'neu',
+  entries: [],
+  customModes: [],
+  locations: [],
+  goal: null,
+  lastExportAt: null,
+  loaded: false,
+  sort: 'date-desc',
+  statsBreakdown: 'gesamt',
+  selectionMode: false,
+  selectedIds: [],
+  selectedChartEntryId: null,
+  form: {
+    type: 'training',
+    modeId: 'klassisch120',
+    date: todayISO(),
+    location: DEFAULT_TRAINING_LOCATION,
+    lanes: makeEmptyLanes('klassisch120'),
+    score: '',
+    fehlwuerfe: '',
+    notes: '',
+    showNewModeForm: false,
+    newModeName: '',
+    newModeThrows: '',
+    showNewLocationForm: false,
+    newLocationName: '',
+    editingId: null
+  },
+  goalForm: { modeId: 'klassisch120', target: '' },
+  filters: { type: 'alle', modeId: 'alle', location: 'alle' }
+};
+
+var lastDeleted = null; /* transient, nicht gespeichert: {entry, index} fuer Undo */
+
+/* ---------- Speicherung ---------- */
+async function loadData() {
+  var e = await storageAdapter.get('kegel_entries');
+  state.entries = e ? JSON.parse(e) : [];
+  var m = await storageAdapter.get('kegel_custom_modes');
+  state.customModes = m ? JSON.parse(m) : [];
+  var l = await storageAdapter.get('kegel_locations');
+  state.locations = l ? JSON.parse(l) : [];
+  var g = await storageAdapter.get('kegel_goal');
+  state.goal = g ? JSON.parse(g) : null;
+  var le = await storageAdapter.get('kegel_last_export');
+  state.lastExportAt = le || null;
+
+  var changed = false;
+  state.entries.forEach(function (en) {
+    if (en.location && state.locations.indexOf(en.location) === -1) { state.locations.push(en.location); changed = true; }
+  });
+  if (state.locations.indexOf(DEFAULT_TRAINING_LOCATION) === -1) { state.locations.push(DEFAULT_TRAINING_LOCATION); changed = true; }
+  state.locations.sort();
+  if (changed) persistLocations();
+
+  state.loaded = true;
+  resetForm();
+  render();
+}
+
+async function persistEntries() { var ok = await storageAdapter.set('kegel_entries', JSON.stringify(state.entries)); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistCustomModes() { var ok = await storageAdapter.set('kegel_custom_modes', JSON.stringify(state.customModes)); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistLocations() { var ok = await storageAdapter.set('kegel_locations', JSON.stringify(state.locations)); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistGoal() { var ok = await storageAdapter.set('kegel_goal', JSON.stringify(state.goal)); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistLastExport() { var ok = await storageAdapter.set('kegel_last_export', state.lastExportAt); if (!ok) showToast('Speichern fehlgeschlagen'); }
+
+/* ---------- Formular-Hilfsfunktionen ---------- */
+function defaultLocationFor(type) { return type === 'training' ? DEFAULT_TRAINING_LOCATION : ''; }
+
+function resetForm(keepType) {
+  var type = keepType || state.form.type || 'training';
+  state.form = {
+    type: type,
+    modeId: 'klassisch120',
+    date: todayISO(),
+    location: defaultLocationFor(type),
+    lanes: makeEmptyLanes('klassisch120'),
+    score: '',
+    fehlwuerfe: '',
+    notes: '',
+    showNewModeForm: false,
+    newModeName: '',
+    newModeThrows: '',
+    showNewLocationForm: false,
+    newLocationName: '',
+    editingId: null
+  };
+}
+
+function setStateByPath(path, value) {
+  var parts = path.split('.');
+  var obj = state;
+  for (var i = 0; i < parts.length - 1; i++) {
+    var key = /^\d+$/.test(parts[i]) ? Number(parts[i]) : parts[i];
+    obj = obj[key];
+  }
+  var lastKey = /^\d+$/.test(parts[parts.length - 1]) ? Number(parts[parts.length - 1]) : parts[parts.length - 1];
+  obj[lastKey] = value;
+}
+
+/* ---------- Statistik- und Filter-Hilfsfunktionen ---------- */
+function getEntryStats(entry) {
+  if (entry.lanes && entry.lanes.length) {
+    var totalScore = entry.lanes.reduce(function (s, l) { return s + (Number(l.total) || 0); }, 0);
+    var totalVolle = entry.lanes.reduce(function (s, l) { return s + (Number(l.volle) || 0); }, 0);
+    var totalFehlwuerfe = entry.lanes.reduce(function (s, l) { return s + (Number(l.fehlwuerfe) || 0); }, 0);
+    return { totalScore: totalScore, totalVolle: totalVolle, totalAbraeumer: totalScore - totalVolle, totalFehlwuerfe: totalFehlwuerfe, hasVolleData: true };
+  }
+  return {
+    totalScore: Number(entry.score) || 0,
+    totalVolle: null,
+    totalAbraeumer: null,
+    totalFehlwuerfe: (entry.fehlwuerfe !== '' && entry.fehlwuerfe !== null && entry.fehlwuerfe !== undefined) ? Number(entry.fehlwuerfe) : null,
+    hasVolleData: false
+  };
+}
+
+function applyFilters(entries) {
+  var f = state.filters;
+  return entries.filter(function (e) {
+    if (f.type !== 'alle' && e.type !== f.type) return false;
+    if (f.modeId !== 'alle' && e.modeId !== f.modeId) return false;
+    if (f.location !== 'alle' && e.location !== f.location) return false;
+    return true;
+  });
+}
+function applyFiltersIgnoringType(entries) {
+  var f = state.filters;
+  return entries.filter(function (e) {
+    if (f.modeId !== 'alle' && e.modeId !== f.modeId) return false;
+    if (f.location !== 'alle' && e.location !== f.location) return false;
+    return true;
+  });
+}
+function applyFiltersIgnoringLocation(entries) {
+  var f = state.filters;
+  return entries.filter(function (e) {
+    if (f.type !== 'alle' && e.type !== f.type) return false;
+    if (f.modeId !== 'alle' && e.modeId !== f.modeId) return false;
+    return true;
+  });
+}
+
+function hasActiveFilters() {
+  var f = state.filters;
+  return f.type !== 'alle' || f.modeId !== 'alle' || f.location !== 'alle';
+}
+
+function getDistinctLocations() {
+  var locs = [];
+  state.entries.forEach(function (e) { if (e.location && locs.indexOf(e.location) === -1) locs.push(e.location); });
+  locs.sort();
+  return locs;
+}
+
+function sortEntries(entries) {
+  var arr = entries.slice();
+  var s = state.sort;
+  arr.sort(function (a, b) {
+    if (s === 'score-desc' || s === 'score-asc') {
+      var sa = getEntryStats(a).totalScore, sb = getEntryStats(b).totalScore;
+      if (sa !== sb) return s === 'score-desc' ? (sb - sa) : (sa - sb);
+      return a.date < b.date ? 1 : -1;
+    }
+    if (s === 'date-asc') {
+      if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+      return a.createdAt < b.createdAt ? -1 : 1;
+    }
+    if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+    return a.createdAt < b.createdAt ? 1 : -1;
+  });
+  return arr;
+}
+
+function currentAccentColor() {
+  if (state.filters.type === 'training') return 'var(--color-accent)';
+  if (state.filters.type === 'wettkampf') return 'var(--color-primary)';
+  return 'var(--color-ink)';
+}
+
+function buildLaneSeries(entries, field) {
+  var maxLanes = 0;
+  entries.forEach(function (e) { if (e.lanes) maxLanes = Math.max(maxLanes, e.lanes.length); });
+  var series = [];
+  for (var i = 0; i < maxLanes; i++) {
+    var pts = [];
+    entries.forEach(function (e) {
+      if (e.lanes && e.lanes[i]) {
+        var val = field === 'volle' ? Number(e.lanes[i].volle) : (Number(e.lanes[i].total) - Number(e.lanes[i].volle));
+        pts.push({ date: e.date, value: val, id: e.id });
+      }
+    });
+    if (pts.length > 0) series.push({ label: 'Bahn ' + (i + 1), data: pts, color: LANE_COLORS[i % LANE_COLORS.length] });
+  }
+  return series;
+}
+
+function getBestScoreForMode(modeId) {
+  var best = null;
+  state.entries.forEach(function (e) {
+    if (e.modeId !== modeId) return;
+    var s = getEntryStats(e).totalScore;
+    if (best === null || s > best) best = s;
+  });
+  return best;
+}
+
+function computeTypeComparison(entries) {
+  var wk = entries.filter(function (e) { return e.type === 'wettkampf'; });
+  var tr = entries.filter(function (e) { return e.type === 'training'; });
+  function avg(arr) {
+    if (arr.length === 0) return null;
+    var sum = arr.reduce(function (s, e) { return s + getEntryStats(e).totalScore; }, 0);
+    return Math.round(sum / arr.length);
+  }
+  return { wettkampfAvg: avg(wk), wettkampfCount: wk.length, trainingAvg: avg(tr), trainingCount: tr.length };
+}
+
+function computeLocationStats(entries) {
+  var map = {};
+  entries.forEach(function (e) {
+    var loc = e.location || '(ohne Ort)';
+    if (!map[loc]) map[loc] = { count: 0, sum: 0 };
+    map[loc].count++;
+    map[loc].sum += getEntryStats(e).totalScore;
+  });
+  var arr = Object.keys(map).map(function (loc) { return { location: loc, count: map[loc].count, avg: Math.round(map[loc].sum / map[loc].count) }; });
+  arr.sort(function (a, b) { return b.avg - a.avg; });
+  return arr;
+}
+
+/* ---------- Charts ---------- */
+function renderLineChartSVG(data, options) {
+  options = options || {};
+  if (!data || data.length === 0) return '<div class="chart-empty">Keine Daten</div>';
+  var width = 320, height = 160;
+  var padL = 34, padR = 12, padT = 14, padB = 26;
+  var chartW = width - padL - padR, chartH = height - padT - padB;
+
+  var values = data.map(function (d) { return d.value; });
+  var minV = Math.min.apply(null, values), maxV = Math.max.apply(null, values);
+  if (minV === maxV) { minV -= 1; maxV += 1; } else { var pad = (maxV - minV) * 0.12; minV -= pad; maxV += pad; }
+
+  var n = data.length;
+  var points = data.map(function (d, i) {
+    var x = n === 1 ? padL + chartW / 2 : padL + (i / (n - 1)) * chartW;
+    var y = padT + chartH - ((d.value - minV) / (maxV - minV)) * chartH;
+    return { x: x, y: y, value: d.value, date: d.date, id: d.id };
+  });
+  var pathD = points.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+  var areaD = pathD + ' L' + points[n - 1].x.toFixed(1) + ',' + (padT + chartH).toFixed(1) + ' L' + points[0].x.toFixed(1) + ',' + (padT + chartH).toFixed(1) + ' Z';
+
+  var color = currentAccentColor();
+  var svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="line-chart" preserveAspectRatio="xMidYMid meet">';
+  svg += '<line x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
+  svg += '<line x1="' + padL + '" y1="' + (padT + chartH) + '" x2="' + (padL + chartW) + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
+
+  if (options.showTrend && n >= 3) {
+    var trendValues = movingAverage(values, TREND_WINDOW);
+    var trendPts = trendValues.map(function (v, i) { return { x: points[i].x, y: padT + chartH - ((v - minV) / (maxV - minV)) * chartH }; });
+    var trendD = trendPts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+    svg += '<path d="' + trendD + '" class="chart-trend" style="stroke:' + color + '" />';
+  }
+
+  svg += '<path d="' + areaD + '" style="fill:' + color + ';opacity:0.1;stroke:none;" />';
+  svg += '<path d="' + pathD + '" class="chart-line" style="stroke:' + color + '" />';
+
+  if (options.highlightBest) {
+    var maxVal = Math.max.apply(null, values);
+    var bestIdx = values.indexOf(maxVal);
+    var bp = points[bestIdx];
+    svg += '<circle cx="' + bp.x.toFixed(1) + '" cy="' + bp.y.toFixed(1) + '" r="6.5" class="chart-best-ring" />';
+  }
+
+  points.forEach(function (p) {
+    if (options.selectedId && p.id === options.selectedId) {
+      svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="7.5" class="chart-point-selected" style="stroke:' + color + '" />';
+    }
+    if (p.id) svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="13" fill="transparent" data-action="show-point-detail" data-id="' + p.id + '" style="cursor:pointer" />';
+    svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3" style="fill:' + color + '" pointer-events="none"><title>' + escapeHtml(p.date) + ': ' + p.value + '</title></circle>';
+  });
+
+  svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" class="chart-label" text-anchor="end">' + maxV.toFixed(0) + '</text>';
+  svg += '<text x="' + (padL - 6) + '" y="' + (padT + chartH) + '" class="chart-label" text-anchor="end">' + minV.toFixed(0) + '</text>';
+  svg += '<text x="' + padL + '" y="' + (height - 6) + '" class="chart-label" text-anchor="start">' + formatDateShort(data[0].date) + '</text>';
+  svg += '<text x="' + (padL + chartW) + '" y="' + (height - 6) + '" class="chart-label" text-anchor="end">' + formatDateShort(data[n - 1].date) + '</text>';
+  svg += '</svg>';
+  return svg;
+}
+
+function renderMultiLineChartSVG(series, options) {
+  options = options || {};
+  if (!series || series.length === 0) return '<div class="chart-empty">Keine Daten</div>';
+  var width = 320, height = 178;
+  var padL = 34, padR = 12, padT = 14, padB = 40;
+  var chartW = width - padL - padR, chartH = height - padT - padB;
+
+  var allValues = [];
+  series.forEach(function (s) { s.data.forEach(function (d) { allValues.push(d.value); }); });
+  var minV = Math.min.apply(null, allValues), maxV = Math.max.apply(null, allValues);
+  if (minV === maxV) { minV -= 1; maxV += 1; } else { var pad = (maxV - minV) * 0.12; minV -= pad; maxV += pad; }
+
+  var allDates = [];
+  series.forEach(function (s) { s.data.forEach(function (d) { if (allDates.indexOf(d.date) === -1) allDates.push(d.date); }); });
+  allDates.sort();
+  var n = allDates.length;
+
+  function xFor(date) { var idx = allDates.indexOf(date); return n === 1 ? padL + chartW / 2 : padL + (idx / (n - 1)) * chartW; }
+  function yFor(value) { return padT + chartH - ((value - minV) / (maxV - minV)) * chartH; }
+
+  var svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="line-chart" preserveAspectRatio="xMidYMid meet">';
+  svg += '<line x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
+  svg += '<line x1="' + padL + '" y1="' + (padT + chartH) + '" x2="' + (padL + chartW) + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
+
+  series.forEach(function (s) {
+    var pts = s.data.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var d = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + xFor(p.date).toFixed(1) + ',' + yFor(p.value).toFixed(1); }).join(' ');
+    svg += '<path d="' + d + '" class="chart-line" style="stroke:' + s.color + '" />';
+    pts.forEach(function (p) {
+      var px = xFor(p.date), py = yFor(p.value);
+      if (options.selectedId && p.id === options.selectedId) {
+        svg += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="7" class="chart-point-selected" style="stroke:' + s.color + '" />';
+      }
+      svg += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="12" fill="transparent" data-action="show-point-detail" data-id="' + p.id + '" style="cursor:pointer" />';
+      svg += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="2.5" style="fill:' + s.color + '" pointer-events="none"><title>' + escapeHtml(s.label) + ' - ' + escapeHtml(p.date) + ': ' + p.value + '</title></circle>';
+    });
+  });
+
+  svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" class="chart-label" text-anchor="end">' + maxV.toFixed(0) + '</text>';
+  svg += '<text x="' + (padL - 6) + '" y="' + (padT + chartH) + '" class="chart-label" text-anchor="end">' + minV.toFixed(0) + '</text>';
+
+  var legendY = height - 8, lx = padL;
+  series.forEach(function (s) {
+    svg += '<circle cx="' + lx + '" cy="' + (legendY - 3) + '" r="4" style="fill:' + s.color + '" />';
+    svg += '<text x="' + (lx + 8) + '" y="' + legendY + '" class="chart-label" text-anchor="start">' + escapeHtml(s.label) + '</text>';
+    lx += 58;
+  });
+
+  svg += '</svg>';
+  return svg;
+}
+
+/* ---------- Komponenten ---------- */
+function modeChip(id, name, active, deletable) {
+  var html = '<div class="mode-chip-wrap"><button type="button" class="mode-chip' + (active ? ' mode-chip--active' : '') + '" data-action="set-mode" data-mode-id="' + id + '">' + escapeHtml(name) + '</button>';
+  if (deletable) html += '<button type="button" class="mode-chip__del" data-action="delete-mode" data-id="' + id + '" aria-label="Modus löschen" title="Modus löschen">&times;</button>';
+  html += '</div>';
+  return html;
+}
+
+function renderModeSelector() {
+  var f = state.form;
+  var html = '<div class="field-group"><label class="field-label">Modus</label><div class="mode-grid">';
+  html += modeChip('klassisch120', CLASSIC_MODES.klassisch120.name, f.modeId === 'klassisch120', false);
+  html += modeChip('klassisch100', CLASSIC_MODES.klassisch100.name, f.modeId === 'klassisch100', false);
+  if (f.type === 'training') {
+    state.customModes.forEach(function (m) { html += modeChip(m.id, m.name, f.modeId === m.id, true); });
+    html += '<button type="button" class="mode-chip mode-chip--add" data-action="toggle-new-mode-form">+ Neuer Modus</button>';
+  }
+  html += '</div>';
+  if (f.type === 'training' && f.showNewModeForm) {
+    html += '<div class="new-mode-form">' +
+      '<input type="text" placeholder="Name, z. B. 50 Räumer" value="' + escapeHtml(f.newModeName) + '" data-bind="form.newModeName" class="text-input">' +
+      '<input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Anzahl Würfe" value="' + escapeHtml(f.newModeThrows) + '" data-bind="form.newModeThrows" class="text-input">' +
+      '<button type="button" class="btn btn--small btn--primary" data-action="save-new-mode">Anlegen</button></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderLaneInputs() {
+  var f = state.form;
+  var mode = CLASSIC_MODES[f.modeId];
+  if (!mode) return '';
+  var html = '';
+  for (var i = 0; i < mode.lanes; i++) {
+    var lane = f.lanes[i] || { volle: '', total: '', fehlwuerfe: '' };
+    html += '<div class="lane-card"><div class="lane-card__title">Bahn ' + (i + 1) + '</div>' +
+      '<div class="lane-card__row"><label for="lane-' + i + '-volle">Volle<span class="hint">nach ' + mode.volleThrows + ' Wurf</span></label>' +
+      '<input id="lane-' + i + '-volle" type="text" inputmode="numeric" pattern="[0-9]*" class="number-input" value="' + escapeHtml(lane.volle) + '" data-bind="form.lanes.' + i + '.volle"></div>' +
+      '<div class="lane-card__row"><label for="lane-' + i + '-total">Gesamt<span class="hint">nach ' + mode.totalThrows + ' Wurf</span></label>' +
+      '<input id="lane-' + i + '-total" type="text" inputmode="numeric" pattern="[0-9]*" class="number-input" value="' + escapeHtml(lane.total) + '" data-bind="form.lanes.' + i + '.total"></div>' +
+      '<div class="lane-card__row"><label for="lane-' + i + '-fehl">Fehlwürfe<span class="hint">Zwischensumme bis hier</span></label>' +
+      '<input id="lane-' + i + '-fehl" type="text" inputmode="numeric" pattern="[0-9]*" class="number-input" value="' + escapeHtml(lane.fehlwuerfe) + '" data-bind="form.lanes.' + i + '.fehlwuerfe"></div>' +
+      '</div>';
+  }
+  return html;
+}
+
+function renderLocationSelect() {
+  var f = state.form;
+  var html = '<div class="field-group"><label class="field-label" for="entry-location">Ort / Bahn' + (f.type === 'training' ? ' <span class="hint">optional</span>' : '') + '</label>';
+  html += '<select id="entry-location" class="select-input" data-bind="form.location">';
+  html += '<option value=""' + (f.location === '' ? ' selected' : '') + '>– auswählen –</option>';
+  state.locations.forEach(function (loc) { html += '<option value="' + escapeHtml(loc) + '"' + (f.location === loc ? ' selected' : '') + '>' + escapeHtml(loc) + '</option>'; });
+  html += '<option value="__new__">+ Neuer Ort…</option>';
+  html += '</select></div>';
+  return html;
+}
+
+function renderNewLocationForm() {
+  var f = state.form;
+  if (!f.showNewLocationForm) return '';
+  return '<div class="new-mode-form">' +
+    '<input type="text" placeholder="Name des Orts / der Bahn" value="' + escapeHtml(f.newLocationName) + '" data-bind="form.newLocationName" class="text-input">' +
+    '<button type="button" class="btn btn--small btn--primary" data-action="save-new-location">Hinzufügen</button></div>';
+}
+
+function renderNotesField() {
+  var f = state.form;
+  return '<div class="field-group"><label class="field-label" for="entry-notes">Notizen <span class="hint">optional</span></label>' +
+    '<textarea id="entry-notes" class="text-input" rows="2" placeholder="z. B. Bahnbedingungen, Ball, Form…" data-bind="form.notes">' + escapeHtml(f.notes) + '</textarea></div>';
+}
+
+function renderFilterBar() {
+  var f = state.filters;
+  var modeOptions = '<option value="alle">Alle Modi</option>' +
+    '<option value="klassisch120"' + (f.modeId === 'klassisch120' ? ' selected' : '') + '>Klassisch 120</option>' +
+    '<option value="klassisch100"' + (f.modeId === 'klassisch100' ? ' selected' : '') + '>Klassisch 100</option>';
+  state.customModes.forEach(function (m) { modeOptions += '<option value="' + m.id + '"' + (f.modeId === m.id ? ' selected' : '') + '>' + escapeHtml(m.name) + '</option>'; });
+
+  var locOptions = '<option value="alle">Alle Bahnen</option>';
+  getDistinctLocations().forEach(function (loc) { locOptions += '<option value="' + escapeHtml(loc) + '"' + (f.location === loc ? ' selected' : '') + '>' + escapeHtml(loc) + '</option>'; });
+
+  var html = '<div class="filter-bar"><div class="filter-toggle">';
+  ['alle', 'wettkampf', 'training'].forEach(function (val) {
+    var label = val === 'alle' ? 'Alle' : (val === 'wettkampf' ? 'Wettkampf' : 'Training');
+    html += '<button type="button" class="filter-toggle__btn' + (f.type === val ? ' is-active' : '') + '" data-action="set-filter-type" data-value="' + val + '">' + label + '</button>';
+  });
+  html += '</div><div class="filter-selects">' +
+    '<select class="select-input" data-bind="filters.modeId">' + modeOptions + '</select>' +
+    '<select class="select-input" data-bind="filters.location">' + locOptions + '</select>' +
+    '</div></div>';
+  return html;
+}
+
+function renderSortControl() {
+  var opts = [['date-desc', 'Datum: neueste zuerst'], ['date-asc', 'Datum: älteste zuerst'], ['score-desc', 'Punkte: höchste zuerst'], ['score-asc', 'Punkte: niedrigste zuerst']];
+  var html = '<div class="sort-row"><select class="select-input" data-bind="sort">';
+  opts.forEach(function (o) { html += '<option value="' + o[0] + '"' + (state.sort === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; });
+  html += '</select><button type="button" class="btn btn--small btn--ghost" data-action="toggle-selection-mode">' + (state.selectionMode ? 'Fertig' : 'Auswählen') + '</button></div>';
+  return html;
+}
+
+function renderBreakdownToggle() {
+  var s = state.statsBreakdown;
+  return '<div class="breakdown-toggle">' +
+    '<button type="button" class="filter-toggle__btn' + (s === 'gesamt' ? ' is-active' : '') + '" data-action="set-breakdown" data-value="gesamt">Gesamt</button>' +
+    '<button type="button" class="filter-toggle__btn' + (s === 'pro-bahn' ? ' is-active' : '') + '" data-action="set-breakdown" data-value="pro-bahn">Pro Bahn</button>' +
+    '</div>';
+}
+
+function renderEntryCard(entry) {
+  var stats = getEntryStats(entry);
+  var typeLabel = entry.type === 'wettkampf' ? 'Wettkampf' : 'Training';
+  var typeClass = entry.type === 'wettkampf' ? '' : ' is-training';
+
+  if (state.selectionMode) {
+    var checked = state.selectedIds.indexOf(entry.id) !== -1;
+    return '<button type="button" class="entry-card' + typeClass + (checked ? ' is-selected' : '') + '" data-action="toggle-select-entry" data-id="' + entry.id + '">' +
+      '<div class="entry-card__checkbox">' + (checked ? '&#10003;' : '') + '</div>' +
+      '<div class="entry-card__main"><div class="entry-card__meta"><span class="entry-card__date">' + formatDateDisplay(entry.date) + '</span>' +
+      '<span class="tag' + typeClass + '">' + typeLabel + '</span></div>' +
+      '<div class="entry-card__mode">' + escapeHtml(getModeName(entry.modeId)) + (entry.location ? ' &middot; ' + escapeHtml(entry.location) : '') + '</div></div>' +
+      '<div class="entry-card__score">' + stats.totalScore + '</div></button>';
+  }
+
+  var expanded = state.expandedEntryId === entry.id;
+  var html = '<button type="button" class="entry-card' + typeClass + '" data-action="toggle-expand" data-id="' + entry.id + '">' +
+    '<div class="entry-card__main"><div class="entry-card__meta"><span class="entry-card__date">' + formatDateDisplay(entry.date) + '</span>' +
+    '<span class="tag' + typeClass + '">' + typeLabel + '</span></div>' +
+    '<div class="entry-card__mode">' + escapeHtml(getModeName(entry.modeId)) + (entry.location ? ' &middot; ' + escapeHtml(entry.location) : '') + '</div></div>' +
+    '<div class="entry-card__score">' + stats.totalScore + '</div></button>';
+
+  if (expanded) {
+    html += '<div class="entry-detail">';
+    if (stats.hasVolleData) {
+      html += '<div class="entry-detail__grid">' +
+        '<div><span class="detail-label">Volle</span><span class="detail-value">' + stats.totalVolle + '</span></div>' +
+        '<div><span class="detail-label">Abräumer</span><span class="detail-value">' + stats.totalAbraeumer + '</span></div>' +
+        '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>' +
+        '</div><div class="lane-breakdown">';
+      entry.lanes.forEach(function (l, i) { html += '<div class="lane-breakdown__row"><span>Bahn ' + (i + 1) + '</span><span>' + l.volle + ' / ' + l.total + ' &middot; ' + l.fehlwuerfe + ' Fehlwürfe</span></div>'; });
+      html += '</div>';
+    } else {
+      html += '<div class="entry-detail__grid"><div><span class="detail-label">Punkte</span><span class="detail-value">' + stats.totalScore + '</span></div>';
+      if (stats.totalFehlwuerfe !== null) html += '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>';
+      html += '</div>';
+    }
+    if (entry.notes) html += '<div class="notes-display">' + escapeHtml(entry.notes) + '</div>';
+    html += '<div class="entry-detail__actions">' +
+      '<button type="button" class="btn btn--small btn--ghost" data-action="edit-entry" data-id="' + entry.id + '">Bearbeiten</button>' +
+      '<button type="button" class="btn btn--small btn--ghost" data-action="duplicate-entry" data-id="' + entry.id + '">Duplizieren</button>' +
+      '<button type="button" class="btn btn--small btn--danger" data-action="delete-entry" data-id="' + entry.id + '">Löschen</button>' +
+      '</div></div>';
+  }
+  return html;
+}
+
+function renderChartBlock(title, data, options) { return '<div class="chart-block"><div class="chart-block__title">' + escapeHtml(title) + '</div>' + renderLineChartSVG(data, options) + '</div>'; }
+function renderMultiChartBlock(title, series, options) { return '<div class="chart-block"><div class="chart-block__title">' + escapeHtml(title) + '</div>' + renderMultiLineChartSVG(series, options) + '</div>'; }
+
+function renderPointDetailPanel() {
+  if (!state.selectedChartEntryId) return '';
+  var entry = state.entries.find(function (e) { return e.id === state.selectedChartEntryId; });
+  if (!entry) return '';
+  var stats = getEntryStats(entry);
+  var typeLabel = entry.type === 'wettkampf' ? 'Wettkampf' : 'Training';
+  var html = '<div class="point-detail" id="point-detail-panel"><div class="point-detail__header"><span>' +
+    formatDateDisplay(entry.date) + ' &middot; ' + typeLabel + ' &middot; ' + escapeHtml(getModeName(entry.modeId)) + (entry.location ? ' &middot; ' + escapeHtml(entry.location) : '') +
+    '</span><button type="button" class="point-detail__close" data-action="close-point-detail" aria-label="Schließen">&times;</button></div>';
+
+  if (stats.hasVolleData) {
+    html += '<div class="entry-detail__grid">' +
+      '<div><span class="detail-label">Gesamt</span><span class="detail-value">' + stats.totalScore + '</span></div>' +
+      '<div><span class="detail-label">Volle</span><span class="detail-value">' + stats.totalVolle + '</span></div>' +
+      '<div><span class="detail-label">Abräumer</span><span class="detail-value">' + stats.totalAbraeumer + '</span></div>' +
+      '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div></div><div class="lane-breakdown">';
+    entry.lanes.forEach(function (l, i) { html += '<div class="lane-breakdown__row"><span>Bahn ' + (i + 1) + '</span><span>' + l.volle + ' / ' + l.total + ' &middot; ' + l.fehlwuerfe + ' Fehlwürfe</span></div>'; });
+    html += '</div>';
+  } else {
+    html += '<div class="entry-detail__grid"><div><span class="detail-label">Punkte</span><span class="detail-value">' + stats.totalScore + '</span></div>';
+    if (stats.totalFehlwuerfe !== null) html += '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>';
+    html += '</div>';
+  }
+  if (entry.notes) html += '<div class="notes-display">' + escapeHtml(entry.notes) + '</div>';
+  html += '</div>';
+  return html;
+}
+
+function renderTypeComparisonBlock(entries) {
+  if (state.filters.type !== 'alle') return '';
+  var c = computeTypeComparison(entries);
+  if (c.wettkampfCount === 0 || c.trainingCount === 0) return '';
+  return '<div class="compare-tiles">' +
+    '<div class="compare-tile"><div class="compare-tile__label">Wettkampf-Schnitt</div><div class="compare-tile__value">' + c.wettkampfAvg + '</div><div class="compare-tile__count">' + c.wettkampfCount + ' Einträge</div></div>' +
+    '<div class="compare-tile"><div class="compare-tile__label">Training-Schnitt</div><div class="compare-tile__value">' + c.trainingAvg + '</div><div class="compare-tile__count">' + c.trainingCount + ' Einträge</div></div>' +
+    '</div>';
+}
+
+function renderLocationStatsBlock(entries) {
+  if (state.filters.location !== 'alle') return '';
+  var stats = computeLocationStats(entries);
+  if (stats.length < 2) return '';
+  var html = '<div class="chart-block"><div class="chart-block__title">Schnitt nach Ort/Bahn</div><div class="location-stats-list">';
+  stats.forEach(function (s) { html += '<div class="location-stats-row"><span>' + escapeHtml(s.location) + '</span><span class="location-stats-row__value">' + s.avg + ' <span class="hint">(' + s.count + ')</span></span></div>'; });
+  html += '</div></div>';
+  return html;
+}
+
+function renderGoalProgress() {
+  if (!state.goal) return '';
+  var relevant = state.entries.filter(function (e) { return e.modeId === state.goal.modeId; });
+  if (relevant.length === 0) return '';
+  var scores = relevant.map(function (e) { return getEntryStats(e).totalScore; });
+  var avg = Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length);
+  var best = Math.max.apply(null, scores);
+  var pct = Math.max(0, Math.min(100, Math.round((best / state.goal.target) * 100)));
+  return '<div class="chart-block"><div class="chart-block__title">Ziel: ' + state.goal.target + ' Punkte (' + escapeHtml(getModeName(state.goal.modeId)) + ')</div>' +
+    '<div class="goal-bar"><div class="goal-bar__fill" style="width:' + pct + '%"></div></div>' +
+    '<div class="goal-bar__label">Beste Punktzahl: ' + best + ' von ' + state.goal.target + ' (' + pct + '%) &middot; Schnitt: ' + avg + '</div></div>';
+}
+
+/* ---------- Views ---------- */
+function renderNeuView() {
+  var f = state.form;
+  var isEdit = !!f.editingId;
+  var html = '<div class="view-header"><h1>' + (isEdit ? 'Eintrag bearbeiten' : 'Neuer Eintrag') + '</h1></div>';
+
+  html += '<div class="type-toggle">' +
+    '<button type="button" class="type-btn type-btn--wettkampf' + (f.type === 'wettkampf' ? ' is-active' : '') + '" data-action="set-type" data-type="wettkampf">Wettkampf</button>' +
+    '<button type="button" class="type-btn type-btn--training' + (f.type === 'training' ? ' is-active' : '') + '" data-action="set-type" data-type="training">Training</button>' +
+    '</div>';
+
+  html += renderModeSelector();
+
+  html += '<div class="field-row">' +
+    '<div class="field-group"><label class="field-label" for="entry-date">Datum</label>' +
+    '<input id="entry-date" type="date" class="text-input" value="' + escapeHtml(f.date) + '" data-bind="form.date"></div>' +
+    renderLocationSelect() + '</div>';
+  html += renderNewLocationForm();
+
+  if (CLASSIC_MODES[f.modeId]) {
+    html += '<div class="lanes-wrap">' + renderLaneInputs() + '</div>';
+  } else {
+    var cm = state.customModes.find(function (m) { return m.id === f.modeId; });
+    html += '<div class="field-row">' +
+      '<div class="field-group"><label class="field-label" for="entry-score">Punkte' + (cm ? ' <span class="hint">(' + cm.throws + ' Wurf)</span>' : '') + '</label>' +
+      '<input id="entry-score" type="text" inputmode="numeric" pattern="[0-9]*" class="number-input" value="' + escapeHtml(f.score) + '" data-bind="form.score"></div>' +
+      '<div class="field-group"><label class="field-label" for="entry-fehl">Fehlwürfe <span class="hint">optional</span></label>' +
+      '<input id="entry-fehl" type="text" inputmode="numeric" pattern="[0-9]*" class="number-input" value="' + escapeHtml(f.fehlwuerfe) + '" data-bind="form.fehlwuerfe"></div>' +
+      '</div>';
+  }
+
+  html += renderNotesField();
+
+  html += '<div class="save-bar">';
+  if (isEdit) html += '<button type="button" class="btn btn--ghost" data-action="cancel-edit">Abbrechen</button>';
+  html += '<button type="button" class="btn btn--primary" data-action="save-entry">' + (isEdit ? 'Änderungen speichern' : 'Eintrag speichern') + '</button></div>';
+  return html;
+}
+
+function renderVerlaufView() {
+  var html = '<div class="view-header"><h1>Verlauf</h1></div>' + renderFilterBar() + renderSortControl();
+
+  if (state.selectionMode) {
+    html += '<div class="selection-bar"><span>' + state.selectedIds.length + ' ausgewählt</span>' +
+      '<button type="button" class="btn btn--small btn--danger" data-action="delete-selected"' + (state.selectedIds.length === 0 ? ' disabled' : '') + '>Löschen</button></div>';
+  }
+
+  var filtered = applyFilters(state.entries);
+  var sorted = sortEntries(filtered);
+
+  if (sorted.length === 0) {
+    html += '<div class="empty-state">' + (hasActiveFilters() ? 'Keine Einträge für diese Filter.' : 'Noch keine Einträge. Leg unter „Neu" deinen ersten Eintrag an.') + '</div>';
+    return html;
+  }
+  html += '<div class="entry-list">';
+  sorted.forEach(function (entry) { html += renderEntryCard(entry); });
+  html += '</div>';
+  return html;
+}
+
+function renderStatistikView() {
+  var html = '<div class="view-header"><h1>Statistik</h1></div>' + renderFilterBar();
+  var filtered = applyFilters(state.entries);
+  var sorted = filtered.slice().sort(function (a, b) {
+    if (a.date !== b.date) return a.date > b.date ? 1 : -1;
+    return a.createdAt > b.createdAt ? 1 : -1;
+  });
+
+  if (sorted.length === 0) {
+    html += '<div class="empty-state">' + (hasActiveFilters() ? 'Keine Daten für diese Filter.' : 'Noch keine Daten für eine Statistik.') + '</div>';
+    return html;
+  }
+
+  html += renderGoalProgress();
+  html += renderTypeComparisonBlock(applyFiltersIgnoringType(state.entries));
+
+  var statsArr = sorted.map(function (e) { var s = getEntryStats(e); s.date = e.date; s.id = e.id; return s; });
+  var scores = statsArr.map(function (s) { return s.totalScore; });
+  var avg = Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length);
+  var best = Math.max.apply(null, scores);
+
+  html += '<div class="summary-tiles">' +
+    '<div class="summary-tile"><div class="summary-tile__value">' + scores.length + '</div><div class="summary-tile__label">Einträge</div></div>' +
+    '<div class="summary-tile"><div class="summary-tile__value">' + avg + '</div><div class="summary-tile__label">Schnitt</div></div>' +
+    '<div class="summary-tile"><div class="summary-tile__value">' + best + '</div><div class="summary-tile__label">Beste Punktzahl</div></div>' +
+    '</div>';
+
+  html += renderPointDetailPanel();
+  html += '<div class="chart-hint">Tipp: auf einen Punkt tippen für die Rundendetails</div>';
+
+  var sel = state.selectedChartEntryId;
+  html += renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id }; }), { showTrend: true, highlightBest: true, selectedId: sel });
+
+  var withVolle = sorted.filter(function (e) { return e.lanes && e.lanes.length; });
+  if (withVolle.length > 0) {
+    html += renderBreakdownToggle();
+    if (state.statsBreakdown === 'pro-bahn') {
+      html += renderMultiChartBlock('Volle', buildLaneSeries(withVolle, 'volle'), { selectedId: sel });
+      html += renderMultiChartBlock('Abräumer', buildLaneSeries(withVolle, 'abraeumer'), { selectedId: sel });
+    } else {
+      var withVolleStats = statsArr.filter(function (s) { return s.hasVolleData; });
+      html += renderChartBlock('Volle', withVolleStats.map(function (s) { return { date: s.date, value: s.totalVolle, id: s.id }; }), { showTrend: true, selectedId: sel });
+      html += renderChartBlock('Abräumer', withVolleStats.map(function (s) { return { date: s.date, value: s.totalAbraeumer, id: s.id }; }), { showTrend: true, selectedId: sel });
+    }
+  }
+
+  var withFehl = statsArr.filter(function (s) { return s.totalFehlwuerfe !== null; });
+  if (withFehl.length > 0) html += renderChartBlock('Fehlwürfe', withFehl.map(function (s) { return { date: s.date, value: s.totalFehlwuerfe, id: s.id }; }), { showTrend: true, selectedId: sel });
+
+  html += renderLocationStatsBlock(applyFiltersIgnoringLocation(state.entries));
+
+  return html;
+}
+
+function renderGoalSection() {
+  var html = '<div class="settings-section"><div class="settings-section__title">Ziel</div>';
+  if (state.goal) {
+    html += '<div class="goal-active"><span class="goal-active__text">Aktuelles Ziel: <strong>' + state.goal.target + ' Punkte</strong> bei ' + escapeHtml(getModeName(state.goal.modeId)) + '</span></div>' +
+      '<div class="save-bar" style="margin-top:12px;"><button type="button" class="btn btn--ghost" data-action="clear-goal">Ziel entfernen</button></div>';
+  } else {
+    var modeOptions = '<option value="klassisch120">' + CLASSIC_MODES.klassisch120.name + '</option><option value="klassisch100">' + CLASSIC_MODES.klassisch100.name + '</option>';
+    state.customModes.forEach(function (m) { modeOptions += '<option value="' + m.id + '">' + escapeHtml(m.name) + '</option>'; });
+    html += '<p class="settings-hint">Setz dir eine Zielpunktzahl für einen Modus und verfolge deinen Fortschritt in der Statistik.</p>' +
+      '<div class="goal-form"><select class="select-input" data-bind="goalForm.modeId">' + modeOptions + '</select>' +
+      '<input type="text" inputmode="numeric" pattern="[0-9]*" class="number-input" placeholder="Ziel" value="' + escapeHtml(state.goalForm.target) + '" data-bind="goalForm.target">' +
+      '<button type="button" class="btn btn--small btn--primary" data-action="save-goal">Setzen</button></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function shouldShowExportReminder() {
+  if (state.entries.length < 5) return false;
+  if (!state.lastExportAt) return true;
+  var days = (Date.now() - new Date(state.lastExportAt).getTime()) / 86400000;
+  return days > 30;
+}
+
+function renderMehrView() {
+  var html = '<div class="view-header"><h1>Mehr</h1></div>';
+  html += renderGoalSection();
+  html += '<div class="settings-section"><div class="settings-section__title">Daten exportieren</div>';
+  if (shouldShowExportReminder()) html += '<p class="export-reminder">💡 Letzter Export: ' + (state.lastExportAt ? formatDateDisplay(state.lastExportAt.slice(0, 10)) : 'noch nie') + ' – zur Sicherheit mal wieder sichern?</p>';
+  html += '<p class="settings-hint">Speichert alle Einträge, Modi und Orte als Datei – zum Sichern oder um sie auf ein anderes Gerät zu übertragen.</p>' +
+    '<button type="button" class="btn btn--primary" data-action="export-data">Daten exportieren</button></div>';
+  html += '<div class="settings-section"><div class="settings-section__title">Daten importieren</div>' +
+    '<p class="settings-hint">Liest eine zuvor exportierte Datei ein. Bereits vorhandene Einträge werden dabei nicht doppelt angelegt.</p>' +
+    '<button type="button" class="btn btn--ghost" data-action="trigger-import">Datei auswählen</button></div>';
+  html += '<div class="settings-section"><div class="settings-section__title">Speicherung</div>' +
+    '<p class="settings-hint">' + (hasNativeStorage()
+      ? 'Deine Daten werden über diesen Chat gespeichert und sind hier jederzeit wieder abrufbar.'
+      : 'Diese Seite läuft gerade außerhalb von Claude. Deine Daten werden lokal in diesem Browser gespeichert und bleiben auch nach dem Schließen erhalten, solange du dieselbe Datei im selben Browser öffnest. Für einen Wechsel des Geräts oder Browsers nutze am besten den Export.')
+      + '</p>' + ((IS_IOS && !IS_STANDALONE && !hasNativeStorage())
+        ? '<p class="settings-hint">Tipp fürs iPhone: In Safari über „Teilen" → „Zum Home-Bildschirm" hinzufügen. Als Home-Bildschirm-App bleiben die Daten dauerhaft erhalten – Safari kann Daten von Seiten, die länger nicht geöffnet wurden, sonst nach einigen Tagen löschen.</p>'
+        : '')
+      + '</div>';
+  return html;
+}
+
+/* ---------- Aktionen ---------- */
+function handleAction(action, data) {
+  switch (action) {
+    case 'nav': state.view = data.viewName; state.expandedEntryId = null; state.selectedChartEntryId = null; render(); break;
+    case 'set-type':
+      if (state.form.type === data.type) break;
+      state.form.type = data.type;
+      if (data.type === 'wettkampf' && !CLASSIC_MODES[state.form.modeId]) { state.form.modeId = 'klassisch120'; state.form.lanes = makeEmptyLanes('klassisch120'); }
+      if (!state.form.location) state.form.location = defaultLocationFor(data.type);
+      state.form.showNewModeForm = false;
+      render();
+      break;
+    case 'set-mode':
+      state.form.modeId = data.modeId;
+      if (CLASSIC_MODES[data.modeId]) { state.form.lanes = makeEmptyLanes(data.modeId); } else { state.form.score = ''; state.form.fehlwuerfe = ''; }
+      state.form.showNewModeForm = false;
+      render();
+      break;
+    case 'toggle-new-mode-form': state.form.showNewModeForm = !state.form.showNewModeForm; render(); break;
+    case 'save-new-mode': saveNewCustomMode(); break;
+    case 'delete-mode': deleteCustomMode(data.id); break;
+    case 'save-new-location': saveNewLocation(); break;
+    case 'save-entry': saveEntry(); break;
+    case 'cancel-edit': resetForm(); render(); break;
+    case 'toggle-expand': state.expandedEntryId = state.expandedEntryId === data.id ? null : data.id; render(); break;
+    case 'edit-entry': startEditEntry(data.id); break;
+    case 'duplicate-entry': startDuplicateEntry(data.id); break;
+    case 'delete-entry': deleteEntry(data.id); break;
+    case 'set-filter-type': state.filters.type = data.value; state.selectedChartEntryId = null; render(); break;
+    case 'set-breakdown': state.statsBreakdown = data.value; render(); break;
+    case 'toggle-selection-mode': state.selectionMode = !state.selectionMode; state.selectedIds = []; state.expandedEntryId = null; render(); break;
+    case 'toggle-select-entry':
+      var si = state.selectedIds.indexOf(data.id);
+      if (si === -1) state.selectedIds.push(data.id); else state.selectedIds.splice(si, 1);
+      render();
+      break;
+    case 'delete-selected': deleteSelectedEntries(); break;
+    case 'show-point-detail':
+      var wasSel = state.selectedChartEntryId === data.id;
+      state.selectedChartEntryId = wasSel ? null : data.id;
+      render();
+      if (!wasSel) setTimeout(function () { var el = document.getElementById('point-detail-panel'); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
+      break;
+    case 'close-point-detail': state.selectedChartEntryId = null; render(); break;
+    case 'save-goal': saveGoal(); break;
+    case 'clear-goal': clearGoal(); break;
+    case 'export-data': exportData(); break;
+    case 'trigger-import': document.getElementById('import-file-input').click(); break;
+  }
+}
+
+function saveNewCustomMode() {
+  var name = state.form.newModeName.trim();
+  var throwsVal = Number(state.form.newModeThrows);
+  if (!name) { appAlert('Bitte einen Namen für den Modus angeben.'); return; }
+  if (!throwsVal || throwsVal <= 0) { appAlert('Bitte eine gültige Wurfanzahl angeben.'); return; }
+  var mode = { id: 'custom_' + genId(), name: name, throws: throwsVal, createdAt: new Date().toISOString() };
+  state.customModes.push(mode);
+  persistCustomModes();
+  state.form.modeId = mode.id; state.form.showNewModeForm = false; state.form.newModeName = ''; state.form.newModeThrows = '';
+  render();
+  showToast('Modus angelegt');
+}
+
+async function deleteCustomMode(id) {
+  var inUse = state.entries.some(function (e) { return e.modeId === id; });
+  var msg = inUse ? 'Dieser Modus wird bereits in gespeicherten Einträgen verwendet und kann danach nicht mehr neu ausgewählt werden. Trotzdem löschen?' : 'Diesen Modus wirklich löschen?';
+  if (!(await appConfirm(msg))) return;
+  state.customModes = state.customModes.filter(function (m) { return m.id !== id; });
+  persistCustomModes();
+  if (state.form.modeId === id) { state.form.modeId = 'klassisch120'; state.form.lanes = makeEmptyLanes('klassisch120'); }
+  render();
+  showToast('Modus gelöscht');
+}
+
+function saveNewLocation() {
+  var name = state.form.newLocationName.trim();
+  if (!name) { appAlert('Bitte einen Namen für den Ort/Bahn angeben.'); return; }
+  if (state.locations.indexOf(name) === -1) { state.locations.push(name); state.locations.sort(); persistLocations(); }
+  state.form.location = name; state.form.showNewLocationForm = false; state.form.newLocationName = '';
+  render();
+  showToast('Ort hinzugefügt');
+}
+
+async function saveEntry() {
+  var f = state.form;
+  if (!f.date) { appAlert('Bitte ein Datum angeben.'); return; }
+  if (f.type === 'wettkampf' && !f.location.trim()) { appAlert('Bitte Ort/Bahn angeben.'); return; }
+
+  var existing = f.editingId ? state.entries.find(function (e) { return e.id === f.editingId; }) : null;
+  var entry = {
+    id: f.editingId || genId(),
+    type: f.type,
+    date: f.date,
+    location: f.location.trim(),
+    modeId: f.modeId,
+    notes: f.notes.trim(),
+    createdAt: existing ? existing.createdAt : new Date().toISOString()
+  };
+
+  if (CLASSIC_MODES[f.modeId]) {
+    for (var i = 0; i < f.lanes.length; i++) {
+      var l = f.lanes[i];
+      if (l.volle === '' || l.total === '' || l.fehlwuerfe === '') { appAlert('Bitte alle Felder für Bahn ' + (i + 1) + ' ausfüllen.'); return; }
+    }
+    var badLane = -1;
+    for (var j = 0; j < f.lanes.length; j++) { if (Number(f.lanes[j].total) < Number(f.lanes[j].volle)) { badLane = j; break; } }
+    if (badLane !== -1 && !(await appConfirm('Bei Bahn ' + (badLane + 1) + ' ist „Gesamt" kleiner als „Volle". Trotzdem speichern?'))) return;
+
+    var badFehl = -1, prevCheck = 0;
+    for (var k = 0; k < f.lanes.length; k++) {
+      var cf = Number(f.lanes[k].fehlwuerfe);
+      if (cf < prevCheck) { badFehl = k; break; }
+      prevCheck = cf;
+    }
+    if (badFehl !== -1 && !(await appConfirm('Bei Bahn ' + (badFehl + 1) + ' ist die Fehlwürfe-Zwischensumme kleiner als bei der vorherigen Bahn. Trotzdem speichern?'))) return;
+
+    var prevFehl = 0;
+    entry.lanes = [];
+    for (var m = 0; m < f.lanes.length; m++) {
+      var cum = Number(f.lanes[m].fehlwuerfe);
+      entry.lanes.push({ volle: Number(f.lanes[m].volle), total: Number(f.lanes[m].total), fehlwuerfe: cum - prevFehl });
+      prevFehl = cum;
+    }
+  } else {
+    if (f.score === '') { appAlert('Bitte die Punktzahl angeben.'); return; }
+    entry.score = Number(f.score);
+    entry.fehlwuerfe = f.fehlwuerfe === '' ? null : Number(f.fehlwuerfe);
+  }
+
+  var wasEdit = !!f.editingId;
+  var priorBest = wasEdit ? null : getBestScoreForMode(entry.modeId);
+
+  if (f.editingId) {
+    var idx = state.entries.findIndex(function (e) { return e.id === f.editingId; });
+    if (idx !== -1) state.entries[idx] = entry; else state.entries.push(entry);
+  } else {
+    state.entries.push(entry);
+  }
+
+  persistEntries();
+  var thisScore = getEntryStats(entry).totalScore;
+  var isRecord = !wasEdit && priorBest !== null && thisScore > priorBest;
+  resetForm(f.type);
+  render();
+  if (isRecord) showToast('🎉 Neuer Rekord! ' + thisScore + ' Punkte bei ' + getModeName(entry.modeId));
+  else showToast(wasEdit ? 'Änderungen gespeichert' : 'Eintrag gespeichert');
+}
+
+function startEditEntry(id) {
+  var entry = state.entries.find(function (e) { return e.id === id; });
+  if (!entry) return;
+  state.form = {
+    type: entry.type,
+    modeId: entry.modeId,
+    date: entry.date,
+    location: entry.location || '',
+    lanes: entry.lanes ? lanesToFormLanes(entry.lanes) : makeEmptyLanes(entry.modeId),
+    score: (entry.score !== undefined && entry.score !== null) ? String(entry.score) : '',
+    fehlwuerfe: (entry.fehlwuerfe !== undefined && entry.fehlwuerfe !== null) ? String(entry.fehlwuerfe) : '',
+    notes: entry.notes || '',
+    showNewModeForm: false, newModeName: '', newModeThrows: '',
+    showNewLocationForm: false, newLocationName: '',
+    editingId: entry.id
+  };
+  state.view = 'neu'; state.expandedEntryId = null;
+  render();
+}
+
+function startDuplicateEntry(id) {
+  var entry = state.entries.find(function (e) { return e.id === id; });
+  if (!entry) return;
+  state.form = {
+    type: entry.type,
+    modeId: entry.modeId,
+    date: todayISO(),
+    location: entry.location || '',
+    lanes: makeEmptyLanes(entry.modeId),
+    score: '',
+    fehlwuerfe: '',
+    notes: '',
+    showNewModeForm: false, newModeName: '', newModeThrows: '',
+    showNewLocationForm: false, newLocationName: '',
+    editingId: null
+  };
+  state.view = 'neu'; state.expandedEntryId = null;
+  render();
+  showToast('Vorlage übernommen – Werte für heute eintragen');
+}
+
+async function deleteEntry(id) {
+  if (!(await appConfirm('Diesen Eintrag wirklich löschen?'))) return;
+  var idx = state.entries.findIndex(function (e) { return e.id === id; });
+  if (idx === -1) return;
+  var removed = state.entries[idx];
+  state.entries.splice(idx, 1);
+  lastDeleted = { entry: removed, index: idx };
+  persistEntries();
+  state.expandedEntryId = null;
+  render();
+  showToast('Eintrag gelöscht', 'Rückgängig', undoDelete);
+}
+
+function undoDelete() {
+  if (!lastDeleted) return;
+  var idx = Math.min(lastDeleted.index, state.entries.length);
+  state.entries.splice(idx, 0, lastDeleted.entry);
+  lastDeleted = null;
+  persistEntries();
+  render();
+}
+
+async function deleteSelectedEntries() {
+  if (state.selectedIds.length === 0) return;
+  if (!(await appConfirm(state.selectedIds.length + ' Einträge wirklich löschen?'))) return;
+  state.entries = state.entries.filter(function (e) { return state.selectedIds.indexOf(e.id) === -1; });
+  persistEntries();
+  state.selectedIds = [];
+  state.selectionMode = false;
+  render();
+  showToast('Einträge gelöscht');
+}
+
+function saveGoal() {
+  var modeId = state.goalForm.modeId;
+  var target = Number(state.goalForm.target);
+  if (!target || target <= 0) { appAlert('Bitte eine gültige Zielpunktzahl angeben.'); return; }
+  state.goal = { modeId: modeId, target: target };
+  persistGoal();
+  state.goalForm = { modeId: 'klassisch120', target: '' };
+  render();
+  showToast('Ziel gespeichert');
+}
+
+async function clearGoal() {
+  if (!(await appConfirm('Ziel wirklich entfernen?'))) return;
+  state.goal = null;
+  persistGoal();
+  render();
+  showToast('Ziel entfernt');
+}
+
+/* ---------- Export / Import ---------- */
+function exportData() {
+  var payload = { app: 'kegelbuch', version: 1, exportedAt: new Date().toISOString(), entries: state.entries, customModes: state.customModes, locations: state.locations, goal: state.goal };
+  var json = JSON.stringify(payload, null, 2);
+  var fileName = 'kegelbuch-export-' + todayISO() + '.json';
+
+  /* iOS: Download per <a download> ist v. a. als Home-Bildschirm-App unzuverlaessig -> Teilen-Menue ("In Dateien sichern") */
+  var shareFile = IS_IOS ? getShareableFile(json, fileName) : null;
+  if (shareFile) {
+    navigator.share({ files: [shareFile], title: 'Kegelbuch-Export' })
+      .then(function () { markExported('Export gesichert'); })
+      .catch(function (err) {
+        if (err && err.name === 'AbortError') return;
+        downloadExport(json, fileName);
+      });
+    return;
+  }
+  downloadExport(json, fileName);
+}
+
+function getShareableFile(json, fileName) {
+  if (!navigator.share || !navigator.canShare || typeof File === 'undefined') return null;
+  var types = ['application/json', 'text/plain'];
+  for (var i = 0; i < types.length; i++) {
+    try {
+      var f = new File([json], fileName, { type: types[i] });
+      if (navigator.canShare({ files: [f] })) return f;
+    } catch (e) { /* naechsten Typ probieren */ }
+  }
+  return null;
+}
+
+function downloadExport(json, fileName) {
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = fileName;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  markExported('Export gestartet');
+}
+
+function markExported(msg) {
+  state.lastExportAt = new Date().toISOString();
+  persistLastExport();
+  render();
+  showToast(msg);
+}
+
+function handleImportFile(file) {
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var data;
+    try { data = JSON.parse(e.target.result); } catch (err) { appAlert('Die Datei konnte nicht gelesen werden. Ist es eine gültige Kegelbuch-Export-Datei?'); return; }
+    if (!data || !Array.isArray(data.entries)) { appAlert('Diese Datei sieht nicht wie ein gültiger Kegelbuch-Export aus.'); return; }
+
+    var existingIds = {};
+    state.entries.forEach(function (en) { existingIds[en.id] = true; });
+    var added = 0, skipped = 0;
+    data.entries.forEach(function (en) { if (en && en.id && !existingIds[en.id]) { state.entries.push(en); existingIds[en.id] = true; added++; } else skipped++; });
+
+    var existingModeIds = {};
+    state.customModes.forEach(function (m) { existingModeIds[m.id] = true; });
+    (data.customModes || []).forEach(function (m) { if (m && m.id && !existingModeIds[m.id]) { state.customModes.push(m); existingModeIds[m.id] = true; } });
+
+    (data.locations || []).forEach(function (loc) { if (loc && state.locations.indexOf(loc) === -1) state.locations.push(loc); });
+    state.locations.sort();
+
+    if (!state.goal && data.goal) state.goal = data.goal;
+
+    persistEntries(); persistCustomModes(); persistLocations(); persistGoal();
+    render();
+    showToast(added + ' Einträge importiert' + (skipped ? ', ' + skipped + ' bereits vorhanden' : ''));
+  };
+  reader.onerror = function () { appAlert('Die Datei konnte nicht gelesen werden.'); };
+  reader.readAsText(file);
+}
+
+/* ---------- Toast ---------- */
+var toastTimer = null;
+function showToast(msg, actionLabel, actionFn) {
+  var el = document.getElementById('toast');
+  if (actionLabel && actionFn) {
+    el.innerHTML = '<span>' + escapeHtml(msg) + '</span><button type="button" class="toast__action" id="toast-action-btn">' + escapeHtml(actionLabel) + '</button>';
+  } else {
+    el.textContent = msg;
+  }
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  var duration = (actionLabel && actionFn) ? 4500 : 2200;
+  toastTimer = setTimeout(function () { el.classList.remove('show'); }, duration);
+  if (actionLabel && actionFn) {
+    var btn = document.getElementById('toast-action-btn');
+    if (btn) btn.onclick = function () { actionFn(); el.classList.remove('show'); clearTimeout(toastTimer); };
+  }
+}
+
+/* ---------- Rendering ---------- */
+function render() {
+  var appEl = document.getElementById('app');
+  var html;
+  if (!state.loaded) html = '<div class="loading-state">Lade Daten…</div>';
+  else if (state.view === 'verlauf') html = renderVerlaufView();
+  else if (state.view === 'statistik') html = renderStatistikView();
+  else if (state.view === 'mehr') html = renderMehrView();
+  else html = renderNeuView();
+  appEl.innerHTML = html;
+  document.querySelectorAll('.nav-btn').forEach(function (btn) { btn.classList.toggle('is-active', btn.dataset.viewName === state.view); });
+}
+
+/* ---------- Event-Delegation ---------- */
+function attachListeners() {
+  var root = document.getElementById('root');
+
+  root.addEventListener('click', function (e) {
+    var actionEl = e.target.closest('[data-action]');
+    if (!actionEl) return;
+    handleAction(actionEl.dataset.action, actionEl.dataset);
+  });
+
+  root.addEventListener('input', function (e) {
+    var el = e.target;
+    if (el.dataset && el.dataset.bind) setStateByPath(el.dataset.bind, el.value);
+  });
+
+  root.addEventListener('change', function (e) {
+    var el = e.target;
+    if (!(el.dataset && el.dataset.bind)) return;
+    setStateByPath(el.dataset.bind, el.value);
+    if (el.dataset.bind === 'form.location' && el.value === '__new__') { state.form.location = ''; state.form.showNewLocationForm = true; }
+    if (el.tagName === 'SELECT') render();
+  });
+
+  document.getElementById('import-file-input').addEventListener('change', function (e) {
+    if (e.target.files && e.target.files[0]) handleImportFile(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  /* Dialog-Buttons */
+  document.getElementById('dialog-ok').addEventListener('click', function () { closeDialog(true); });
+  document.getElementById('dialog-cancel').addEventListener('click', function () { closeDialog(false); });
+  document.getElementById('dialog').addEventListener('click', function (e) { if (e.target === this) closeDialog(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dialogResolve) closeDialog(false); });
+
+  /* iOS: Nach dem Schliessen der Tastatur bleibt die Seite manchmal verschoben -> zuruecksetzen */
+  document.addEventListener('focusout', function () {
+    setTimeout(function () {
+      var a = document.activeElement;
+      var typing = a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT');
+      if (!typing && (window.scrollY || document.documentElement.scrollTop)) window.scrollTo(0, 0);
+    }, 60);
+  });
+}
+
+/* ---------- Start ---------- */
+async function init() {
+  attachListeners();
+  render();
+  /* Browser um dauerhaften Speicher bitten (verhindert Loeschen durch Safari, wo unterstuetzt) */
+  try { if (!hasNativeStorage() && navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {}); } catch (e) {}
+  await loadData();
+}
+init();
+</script>
+</body>
+</html>
