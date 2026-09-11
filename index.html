@@ -4,14 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1F4432">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Kegelbuch">
-<meta name="format-detection" content="telephone=no">
 <title>Kegelbuch</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%231F4432'/%3E%3Ctext%20x='50'%20y='70'%20font-family='Georgia,serif'%20font-size='58'%20font-weight='700'%20fill='%23F3F4EE'%20text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%231F4432'/%3E%3Ctext%20x='50'%20y='70'%20font-family='Georgia,serif'%20font-size='58'%20font-weight='700'%20fill='%23F3F4EE'%20text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
@@ -37,8 +32,7 @@
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; overscroll-behavior: none; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { height: 100%; margin: 0; }
 
 body {
   font-family: var(--font-body);
@@ -50,7 +44,7 @@ body {
 }
 
 button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
-button { cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-appearance: none; appearance: none; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 button:disabled { opacity: 0.45; cursor: default; }
 :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 
@@ -62,7 +56,6 @@ button:disabled { opacity: 0.45; cursor: default; }
   display: flex;
   flex-direction: column;
   height: 100vh;
-  height: -webkit-fill-available;
   height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
@@ -71,10 +64,10 @@ button:disabled { opacity: 0.45; cursor: default; }
   overflow: hidden;
 }
 
-.top-bar { flex: 0 0 auto; padding: calc(16px + env(safe-area-inset-top, 0px)) 20px 14px; border-bottom: 1px solid var(--color-line); background: var(--color-bg); }
+.top-bar { flex: 0 0 auto; padding: 16px 20px 14px; border-bottom: 1px solid var(--color-line); background: var(--color-bg); }
 .wordmark { font-family: var(--font-display); font-weight: 600; font-size: 21px; color: var(--color-primary); }
 
-#app { flex: 1 1 auto; overflow-y: auto; padding: 18px 16px 28px; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
+#app { flex: 1 1 auto; overflow-y: auto; padding: 18px 16px 28px; -webkit-overflow-scrolling: touch; }
 
 .bottom-nav { flex: 0 0 auto; display: flex; border-top: 1px solid var(--color-line); background: var(--color-surface); padding-bottom: env(safe-area-inset-bottom, 0); }
 .nav-btn { flex: 1; border: none; background: none; padding: 12px 6px 10px; font-size: 12.5px; font-weight: 500; color: var(--color-ink-faint); border-top: 2px solid transparent; }
@@ -98,15 +91,7 @@ button:disabled { opacity: 0.45; cursor: default; }
 .text-input, .number-input, .select-input {
   width: 100%; padding: 11px 12px; border: 1.5px solid var(--color-line); border-radius: var(--radius-control);
   background: var(--color-surface); font-size: 16px;
-  -webkit-appearance: none; appearance: none; margin: 0; min-width: 0;
 }
-.select-input {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235C6B62' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 12px center; background-size: 12px 8px; padding-right: 34px;
-}
-input[type="date"].text-input { display: block; min-height: 48px; text-align: left; }
-input[type="date"]::-webkit-date-and-time-value { text-align: left; margin: 0; }
-input[type="date"]::-webkit-datetime-edit { padding: 0; }
 textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
 .text-input:focus, .number-input:focus, .select-input:focus { border-color: var(--color-primary); }
 .number-input { font-family: var(--font-display); font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -122,7 +107,6 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
   border: 2px solid var(--color-bg); background: var(--color-alert); color: #fff; font-size: 12px; line-height: 1;
   display: flex; align-items: center; justify-content: center; padding: 0;
 }
-.mode-chip__del::after { content: ''; position: absolute; top: -10px; right: -10px; bottom: -10px; left: -10px; }
 
 .new-mode-form { display: flex; gap: 8px; margin: 8px 0 16px; flex-wrap: wrap; }
 .new-mode-form .text-input { width: auto; flex: 1 1 120px; }
@@ -146,13 +130,13 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
 
 /* Filter + sort bar */
 .filter-bar { margin-bottom: 10px; }
-.filter-toggle { display: flex; gap: 6px; margin-bottom: 8px; }
-.filter-toggle__btn { flex: 1; padding: 8px 4px; border-radius: var(--radius-pill); border: 1.5px solid var(--color-line); background: var(--color-surface); font-size: 13px; font-weight: 500; color: var(--color-ink-soft); }
+.filter-toggle { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.filter-toggle__btn { flex: 1 1 auto; min-width: 64px; padding: 8px 6px; border-radius: var(--radius-pill); border: 1.5px solid var(--color-line); background: var(--color-surface); font-size: 13px; font-weight: 500; color: var(--color-ink-soft); }
 .filter-toggle__btn.is-active { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
 .filter-selects { display: flex; gap: 8px; }
-.filter-selects .select-input { padding: 8px 30px 8px 10px; font-size: 13px; background-position: right 10px center; }
+.filter-selects .select-input { padding: 8px 10px; font-size: 13px; }
 .sort-row { display: flex; gap: 8px; align-items: center; margin: 0 0 16px; }
-.sort-row .select-input { flex: 1; padding: 8px 30px 8px 10px; font-size: 13px; background-position: right 10px center; }
+.sort-row .select-input { flex: 1; padding: 8px 10px; font-size: 13px; }
 .breakdown-toggle { display: flex; gap: 6px; margin: 2px 0 10px; }
 
 /* Selection mode */
@@ -244,30 +228,13 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
 
 /* Toast */
 .toast {
-  position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--color-ink); color: #fff;
+  position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--color-ink); color: #fff;
   padding: 10px 14px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none;
   transition: opacity .2s, transform .2s; z-index: 100; max-width: 92%; text-align: center;
   display: flex; align-items: center; gap: 4px; justify-content: center;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 .toast__action { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 4px 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; margin-left: 6px; flex: 0 0 auto; }
-
-/* Dialog (ersetzt alert/confirm) */
-.dialog-backdrop { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 200; background: rgba(23,35,28,0.45); display: flex; align-items: center; justify-content: center; padding: 24px calc(20px + env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) calc(20px + env(safe-area-inset-left, 0px)); }
-.dialog-backdrop[hidden] { display: none; }
-.dialog { width: 100%; max-width: 360px; background: var(--color-surface); border-radius: var(--radius-card); padding: 20px 18px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
-.dialog__msg { margin: 0 0 18px; font-size: 15px; line-height: 1.5; color: var(--color-ink); white-space: pre-line; }
-.dialog__actions { display: flex; gap: 10px; }
-.dialog__actions .btn[hidden] { display: none; }
-
-/* Unsichtbares, aber auf iOS zuverlässig auslösbares Datei-Feld */
-.file-input-hidden { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; left: -9999px; }
-
-/* iOS: Eingabefelder unter 16px lösen beim Antippen Zoom aus */
-@supports (-webkit-touch-callout: none) {
-  .text-input, .number-input, .select-input,
-  .filter-selects .select-input, .sort-row .select-input { font-size: 16px; }
-}
 </style>
 </head>
 <body>
@@ -282,16 +249,7 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
   </nav>
 </div>
 <div id="toast" class="toast"></div>
-<div id="dialog" class="dialog-backdrop" hidden>
-  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialog-msg">
-    <p id="dialog-msg" class="dialog__msg"></p>
-    <div class="dialog__actions">
-      <button type="button" class="btn btn--ghost" id="dialog-cancel">Abbrechen</button>
-      <button type="button" class="btn btn--primary" id="dialog-ok">OK</button>
-    </div>
-  </div>
-</div>
-<input type="file" id="import-file-input" accept=".json,application/json,text/plain" class="file-input-hidden" tabindex="-1" aria-hidden="true">
+<input type="file" id="import-file-input" accept="application/json,.json" style="display:none">
 
 <script>
 /* ---------- Konstanten ---------- */
@@ -302,31 +260,6 @@ var CLASSIC_MODES = {
 var LANE_COLORS = ['#1F4432', '#B87A2E', '#5B7B9A', '#8B4A6B', '#C0562E', '#3F6B4E'];
 var DEFAULT_TRAINING_LOCATION = 'Ammendorf';
 var TREND_WINDOW = 3;
-
-/* ---------- Plattform ---------- */
-var IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-var IS_STANDALONE = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
-
-/* ---------- Dialoge: ersetzen alert/confirm, die auf iOS blockiert oder unterdrueckt werden koennen ---------- */
-var dialogResolve = null;
-function openDialog(msg, isConfirm) {
-  return new Promise(function (resolve) {
-    if (dialogResolve) dialogResolve(false);
-    dialogResolve = resolve;
-    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-    document.getElementById('dialog-msg').textContent = msg;
-    document.getElementById('dialog-cancel').hidden = !isConfirm;
-    document.getElementById('dialog-ok').textContent = isConfirm ? 'OK' : 'Verstanden';
-    document.getElementById('dialog').hidden = false;
-  });
-}
-function closeDialog(result) {
-  document.getElementById('dialog').hidden = true;
-  var r = dialogResolve; dialogResolve = null;
-  if (r) r(result);
-}
-function appAlert(msg) { return openDialog(msg, false); }
-function appConfirm(msg) { return openDialog(msg, true); }
 
 /* ---------- Hilfsfunktionen ---------- */
 function todayISO() {
@@ -408,6 +341,8 @@ var state = {
   loaded: false,
   sort: 'date-desc',
   statsBreakdown: 'gesamt',
+  statsModeId: 'klassisch120',
+  dateFilter: { preset: 'alle', start: '', end: '' },
   selectionMode: false,
   selectedIds: [],
   selectedChartEntryId: null,
@@ -445,6 +380,8 @@ async function loadData() {
   state.goal = g ? JSON.parse(g) : null;
   var le = await storageAdapter.get('kegel_last_export');
   state.lastExportAt = le || null;
+  var sm = await storageAdapter.get('kegel_stats_mode');
+  state.statsModeId = sm || 'klassisch120';
 
   var changed = false;
   state.entries.forEach(function (en) {
@@ -453,6 +390,10 @@ async function loadData() {
   if (state.locations.indexOf(DEFAULT_TRAINING_LOCATION) === -1) { state.locations.push(DEFAULT_TRAINING_LOCATION); changed = true; }
   state.locations.sort();
   if (changed) persistLocations();
+
+  if (!CLASSIC_MODES[state.statsModeId] && !state.customModes.some(function (m) { return m.id === state.statsModeId; })) {
+    state.statsModeId = 'klassisch120';
+  }
 
   state.loaded = true;
   resetForm();
@@ -464,6 +405,7 @@ async function persistCustomModes() { var ok = await storageAdapter.set('kegel_c
 async function persistLocations() { var ok = await storageAdapter.set('kegel_locations', JSON.stringify(state.locations)); if (!ok) showToast('Speichern fehlgeschlagen'); }
 async function persistGoal() { var ok = await storageAdapter.set('kegel_goal', JSON.stringify(state.goal)); if (!ok) showToast('Speichern fehlgeschlagen'); }
 async function persistLastExport() { var ok = await storageAdapter.set('kegel_last_export', state.lastExportAt); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistStatsMode() { var ok = await storageAdapter.set('kegel_stats_mode', state.statsModeId); if (!ok) showToast('Speichern fehlgeschlagen'); }
 
 /* ---------- Formular-Hilfsfunktionen ---------- */
 function defaultLocationFor(type) { return type === 'training' ? DEFAULT_TRAINING_LOCATION : ''; }
@@ -505,14 +447,22 @@ function getEntryStats(entry) {
     var totalScore = entry.lanes.reduce(function (s, l) { return s + (Number(l.total) || 0); }, 0);
     var totalVolle = entry.lanes.reduce(function (s, l) { return s + (Number(l.volle) || 0); }, 0);
     var totalFehlwuerfe = entry.lanes.reduce(function (s, l) { return s + (Number(l.fehlwuerfe) || 0); }, 0);
-    return { totalScore: totalScore, totalVolle: totalVolle, totalAbraeumer: totalScore - totalVolle, totalFehlwuerfe: totalFehlwuerfe, hasVolleData: true };
+    var mode = CLASSIC_MODES[entry.modeId];
+    var totalThrowsAll = mode ? mode.lanes * mode.totalThrows : null;
+    return {
+      totalScore: totalScore, totalVolle: totalVolle, totalAbraeumer: totalScore - totalVolle, totalFehlwuerfe: totalFehlwuerfe,
+      hasVolleData: true, perThrow: totalThrowsAll ? (totalScore / totalThrowsAll) : null
+    };
   }
+  var cm = state.customModes.find(function (m) { return m.id === entry.modeId; });
+  var scoreVal = Number(entry.score) || 0;
   return {
-    totalScore: Number(entry.score) || 0,
+    totalScore: scoreVal,
     totalVolle: null,
     totalAbraeumer: null,
     totalFehlwuerfe: (entry.fehlwuerfe !== '' && entry.fehlwuerfe !== null && entry.fehlwuerfe !== undefined) ? Number(entry.fehlwuerfe) : null,
-    hasVolleData: false
+    hasVolleData: false,
+    perThrow: (cm && cm.throws) ? (scoreVal / cm.throws) : null
   };
 }
 
@@ -525,26 +475,61 @@ function applyFilters(entries) {
     return true;
   });
 }
+function getDateFilterRange() {
+  var d = state.dateFilter;
+  if (d.preset === 'alle') return null;
+  if (d.preset === 'custom') {
+    if (!d.start && !d.end) return null;
+    return { start: d.start || null, end: d.end || null };
+  }
+  var days = Number(d.preset);
+  var end = todayISO();
+  var startDate = new Date(new Date(end).getTime() - (days - 1) * 86400000);
+  return { start: startDate.toISOString().slice(0, 10), end: end };
+}
+function isInDateRange(date) {
+  var range = getDateFilterRange();
+  if (!range) return true;
+  if (range.start && date < range.start) return false;
+  if (range.end && date > range.end) return false;
+  return true;
+}
+
+/* Statistik nutzt immer genau einen Modus (statsModeId), nie "alle" - unterschiedliche
+   Modi haben unterschiedliche Wurfanzahlen und sind sonst nicht vergleichbar. */
+function applyStatsFilters(entries) {
+  var f = state.filters;
+  return entries.filter(function (e) {
+    if (e.modeId !== state.statsModeId) return false;
+    if (f.type !== 'alle' && e.type !== f.type) return false;
+    if (f.location !== 'alle' && e.location !== f.location) return false;
+    return isInDateRange(e.date);
+  });
+}
 function applyFiltersIgnoringType(entries) {
   var f = state.filters;
   return entries.filter(function (e) {
-    if (f.modeId !== 'alle' && e.modeId !== f.modeId) return false;
+    if (e.modeId !== state.statsModeId) return false;
     if (f.location !== 'alle' && e.location !== f.location) return false;
-    return true;
+    return isInDateRange(e.date);
   });
 }
 function applyFiltersIgnoringLocation(entries) {
   var f = state.filters;
   return entries.filter(function (e) {
+    if (e.modeId !== state.statsModeId) return false;
     if (f.type !== 'alle' && e.type !== f.type) return false;
-    if (f.modeId !== 'alle' && e.modeId !== f.modeId) return false;
-    return true;
+    return isInDateRange(e.date);
   });
 }
 
 function hasActiveFilters() {
   var f = state.filters;
   return f.type !== 'alle' || f.modeId !== 'alle' || f.location !== 'alle';
+}
+function hasActiveStatsFilters() {
+  var f = state.filters;
+  return f.type !== 'alle' || f.location !== 'alle' || state.dateFilter.preset !== 'alle';
 }
 
 function getDistinctLocations() {
@@ -579,16 +564,19 @@ function currentAccentColor() {
   return 'var(--color-ink)';
 }
 
+/* `entries` muss bereits chronologisch sortiert sein (ein Eintrag = ein fester Platz auf der
+   X-Achse). Wir positionieren Punkte über den Index in dieser Liste statt über das Datum,
+   sonst würden mehrere Einträge vom selben Tag auf derselben X-Position übereinander landen. */
 function buildLaneSeries(entries, field) {
   var maxLanes = 0;
   entries.forEach(function (e) { if (e.lanes) maxLanes = Math.max(maxLanes, e.lanes.length); });
   var series = [];
   for (var i = 0; i < maxLanes; i++) {
     var pts = [];
-    entries.forEach(function (e) {
+    entries.forEach(function (e, idx) {
       if (e.lanes && e.lanes[i]) {
         var val = field === 'volle' ? Number(e.lanes[i].volle) : (Number(e.lanes[i].total) - Number(e.lanes[i].volle));
-        pts.push({ date: e.date, value: val, id: e.id });
+        pts.push({ date: e.date, value: val, id: e.id, index: idx });
       }
     });
     if (pts.length > 0) series.push({ label: 'Bahn ' + (i + 1), data: pts, color: LANE_COLORS[i % LANE_COLORS.length] });
@@ -689,11 +677,16 @@ function renderLineChartSVG(data, options) {
   return svg;
 }
 
-function renderMultiLineChartSVG(series, options) {
+/* `axisEntries` ist die vollstaendige, chronologisch sortierte Eintragsliste (dieselbe, die an
+   buildLaneSeries uebergeben wurde) - liefert die Gesamtzahl der X-Positionen sowie die
+   erste/letzte Datumsbeschriftung. Positionierung ueber den Index (nicht das Datum), damit
+   mehrere Eintraege vom selben Tag nebeneinander statt uebereinander landen. */
+function renderMultiLineChartSVG(series, options, axisEntries) {
   options = options || {};
+  axisEntries = axisEntries || [];
   if (!series || series.length === 0) return '<div class="chart-empty">Keine Daten</div>';
-  var width = 320, height = 178;
-  var padL = 34, padR = 12, padT = 14, padB = 40;
+  var width = 320, height = 192;
+  var padL = 34, padR = 12, padT = 14, padB = 54;
   var chartW = width - padL - padR, chartH = height - padT - padB;
 
   var allValues = [];
@@ -701,12 +694,9 @@ function renderMultiLineChartSVG(series, options) {
   var minV = Math.min.apply(null, allValues), maxV = Math.max.apply(null, allValues);
   if (minV === maxV) { minV -= 1; maxV += 1; } else { var pad = (maxV - minV) * 0.12; minV -= pad; maxV += pad; }
 
-  var allDates = [];
-  series.forEach(function (s) { s.data.forEach(function (d) { if (allDates.indexOf(d.date) === -1) allDates.push(d.date); }); });
-  allDates.sort();
-  var n = allDates.length;
+  var n = axisEntries.length;
 
-  function xFor(date) { var idx = allDates.indexOf(date); return n === 1 ? padL + chartW / 2 : padL + (idx / (n - 1)) * chartW; }
+  function xFor(index) { return n <= 1 ? padL + chartW / 2 : padL + (index / (n - 1)) * chartW; }
   function yFor(value) { return padT + chartH - ((value - minV) / (maxV - minV)) * chartH; }
 
   var svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="line-chart" preserveAspectRatio="xMidYMid meet">';
@@ -714,11 +704,11 @@ function renderMultiLineChartSVG(series, options) {
   svg += '<line x1="' + padL + '" y1="' + (padT + chartH) + '" x2="' + (padL + chartW) + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
 
   series.forEach(function (s) {
-    var pts = s.data.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-    var d = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + xFor(p.date).toFixed(1) + ',' + yFor(p.value).toFixed(1); }).join(' ');
+    var pts = s.data.slice().sort(function (a, b) { return a.index - b.index; });
+    var d = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + xFor(p.index).toFixed(1) + ',' + yFor(p.value).toFixed(1); }).join(' ');
     svg += '<path d="' + d + '" class="chart-line" style="stroke:' + s.color + '" />';
     pts.forEach(function (p) {
-      var px = xFor(p.date), py = yFor(p.value);
+      var px = xFor(p.index), py = yFor(p.value);
       if (options.selectedId && p.id === options.selectedId) {
         svg += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="7" class="chart-point-selected" style="stroke:' + s.color + '" />';
       }
@@ -729,6 +719,10 @@ function renderMultiLineChartSVG(series, options) {
 
   svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" class="chart-label" text-anchor="end">' + maxV.toFixed(0) + '</text>';
   svg += '<text x="' + (padL - 6) + '" y="' + (padT + chartH) + '" class="chart-label" text-anchor="end">' + minV.toFixed(0) + '</text>';
+  if (n > 0) {
+    svg += '<text x="' + padL + '" y="' + (padT + chartH + 14) + '" class="chart-label" text-anchor="start">' + formatDateShort(axisEntries[0].date) + '</text>';
+    svg += '<text x="' + (padL + chartW) + '" y="' + (padT + chartH + 14) + '" class="chart-label" text-anchor="end">' + formatDateShort(axisEntries[n - 1].date) + '</text>';
+  }
 
   var legendY = height - 8, lx = padL;
   series.forEach(function (s) {
@@ -835,6 +829,45 @@ function renderFilterBar() {
   return html;
 }
 
+/* Statistik hat immer genau einen Modus ausgewaehlt (kein "Alle Modi"), da unterschiedliche
+   Modi unterschiedliche Wurfanzahlen haben und in einem Diagramm nicht vergleichbar waeren. */
+function renderStatsFilterBar() {
+  var f = state.filters;
+  var modeOptions = '<option value="klassisch120"' + (state.statsModeId === 'klassisch120' ? ' selected' : '') + '>' + CLASSIC_MODES.klassisch120.name + '</option>' +
+    '<option value="klassisch100"' + (state.statsModeId === 'klassisch100' ? ' selected' : '') + '>' + CLASSIC_MODES.klassisch100.name + '</option>';
+  state.customModes.forEach(function (m) { modeOptions += '<option value="' + m.id + '"' + (state.statsModeId === m.id ? ' selected' : '') + '>' + escapeHtml(m.name) + '</option>'; });
+
+  var locOptions = '<option value="alle">Alle Bahnen</option>';
+  getDistinctLocations().forEach(function (loc) { locOptions += '<option value="' + escapeHtml(loc) + '"' + (f.location === loc ? ' selected' : '') + '>' + escapeHtml(loc) + '</option>'; });
+
+  var html = '<div class="filter-bar"><div class="filter-toggle">';
+  ['alle', 'wettkampf', 'training'].forEach(function (val) {
+    var label = val === 'alle' ? 'Alle' : (val === 'wettkampf' ? 'Wettkampf' : 'Training');
+    html += '<button type="button" class="filter-toggle__btn' + (f.type === val ? ' is-active' : '') + '" data-action="set-filter-type" data-value="' + val + '">' + label + '</button>';
+  });
+  html += '</div><div class="filter-selects">' +
+    '<select class="select-input" data-bind="statsModeId">' + modeOptions + '</select>' +
+    '<select class="select-input" data-bind="filters.location">' + locOptions + '</select>' +
+    '</div></div>';
+  return html;
+}
+
+function renderDateFilter() {
+  var d = state.dateFilter;
+  var presets = [['alle', 'Gesamter Zeitraum'], ['7', '7 Tage'], ['30', '30 Tage'], ['90', '90 Tage'], ['custom', 'Zeitraum wählen']];
+  var html = '<div class="filter-bar"><div class="filter-toggle">';
+  presets.forEach(function (p) { html += '<button type="button" class="filter-toggle__btn' + (d.preset === p[0] ? ' is-active' : '') + '" data-action="set-date-preset" data-value="' + p[0] + '">' + p[1] + '</button>'; });
+  html += '</div>';
+  if (d.preset === 'custom') {
+    html += '<div class="field-row">' +
+      '<div class="field-group"><label class="field-label">Von</label><input type="date" class="text-input" value="' + escapeHtml(d.start) + '" data-bind="dateFilter.start"></div>' +
+      '<div class="field-group"><label class="field-label">Bis</label><input type="date" class="text-input" value="' + escapeHtml(d.end) + '" data-bind="dateFilter.end"></div>' +
+      '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
 function renderSortControl() {
   var opts = [['date-desc', 'Datum: neueste zuerst'], ['date-asc', 'Datum: älteste zuerst'], ['score-desc', 'Punkte: höchste zuerst'], ['score-asc', 'Punkte: niedrigste zuerst']];
   var html = '<div class="sort-row"><select class="select-input" data-bind="sort">';
@@ -880,12 +913,14 @@ function renderEntryCard(entry) {
         '<div><span class="detail-label">Volle</span><span class="detail-value">' + stats.totalVolle + '</span></div>' +
         '<div><span class="detail-label">Abräumer</span><span class="detail-value">' + stats.totalAbraeumer + '</span></div>' +
         '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>' +
+        '<div><span class="detail-label">Schnitt/Wurf</span><span class="detail-value">' + stats.perThrow.toFixed(2) + '</span></div>' +
         '</div><div class="lane-breakdown">';
       entry.lanes.forEach(function (l, i) { html += '<div class="lane-breakdown__row"><span>Bahn ' + (i + 1) + '</span><span>' + l.volle + ' / ' + l.total + ' &middot; ' + l.fehlwuerfe + ' Fehlwürfe</span></div>'; });
       html += '</div>';
     } else {
       html += '<div class="entry-detail__grid"><div><span class="detail-label">Punkte</span><span class="detail-value">' + stats.totalScore + '</span></div>';
       if (stats.totalFehlwuerfe !== null) html += '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>';
+      if (stats.perThrow !== null) html += '<div><span class="detail-label">Schnitt/Wurf</span><span class="detail-value">' + stats.perThrow.toFixed(2) + '</span></div>';
       html += '</div>';
     }
     if (entry.notes) html += '<div class="notes-display">' + escapeHtml(entry.notes) + '</div>';
@@ -899,7 +934,7 @@ function renderEntryCard(entry) {
 }
 
 function renderChartBlock(title, data, options) { return '<div class="chart-block"><div class="chart-block__title">' + escapeHtml(title) + '</div>' + renderLineChartSVG(data, options) + '</div>'; }
-function renderMultiChartBlock(title, series, options) { return '<div class="chart-block"><div class="chart-block__title">' + escapeHtml(title) + '</div>' + renderMultiLineChartSVG(series, options) + '</div>'; }
+function renderMultiChartBlock(title, series, options, axisEntries) { return '<div class="chart-block"><div class="chart-block__title">' + escapeHtml(title) + '</div>' + renderMultiLineChartSVG(series, options, axisEntries) + '</div>'; }
 
 function renderPointDetailPanel() {
   if (!state.selectedChartEntryId) return '';
@@ -916,12 +951,14 @@ function renderPointDetailPanel() {
       '<div><span class="detail-label">Gesamt</span><span class="detail-value">' + stats.totalScore + '</span></div>' +
       '<div><span class="detail-label">Volle</span><span class="detail-value">' + stats.totalVolle + '</span></div>' +
       '<div><span class="detail-label">Abräumer</span><span class="detail-value">' + stats.totalAbraeumer + '</span></div>' +
-      '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div></div><div class="lane-breakdown">';
+      '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>' +
+      '<div><span class="detail-label">Schnitt/Wurf</span><span class="detail-value">' + stats.perThrow.toFixed(2) + '</span></div></div><div class="lane-breakdown">';
     entry.lanes.forEach(function (l, i) { html += '<div class="lane-breakdown__row"><span>Bahn ' + (i + 1) + '</span><span>' + l.volle + ' / ' + l.total + ' &middot; ' + l.fehlwuerfe + ' Fehlwürfe</span></div>'; });
     html += '</div>';
   } else {
     html += '<div class="entry-detail__grid"><div><span class="detail-label">Punkte</span><span class="detail-value">' + stats.totalScore + '</span></div>';
     if (stats.totalFehlwuerfe !== null) html += '<div><span class="detail-label">Fehlwürfe</span><span class="detail-value">' + stats.totalFehlwuerfe + '</span></div>';
+    if (stats.perThrow !== null) html += '<div><span class="detail-label">Schnitt/Wurf</span><span class="detail-value">' + stats.perThrow.toFixed(2) + '</span></div>';
     html += '</div>';
   }
   if (entry.notes) html += '<div class="notes-display">' + escapeHtml(entry.notes) + '</div>';
@@ -1023,15 +1060,15 @@ function renderVerlaufView() {
 }
 
 function renderStatistikView() {
-  var html = '<div class="view-header"><h1>Statistik</h1></div>' + renderFilterBar();
-  var filtered = applyFilters(state.entries);
+  var html = '<div class="view-header"><h1>Statistik</h1></div>' + renderStatsFilterBar() + renderDateFilter();
+  var filtered = applyStatsFilters(state.entries);
   var sorted = filtered.slice().sort(function (a, b) {
     if (a.date !== b.date) return a.date > b.date ? 1 : -1;
     return a.createdAt > b.createdAt ? 1 : -1;
   });
 
   if (sorted.length === 0) {
-    html += '<div class="empty-state">' + (hasActiveFilters() ? 'Keine Daten für diese Filter.' : 'Noch keine Daten für eine Statistik.') + '</div>';
+    html += '<div class="empty-state">' + (hasActiveStatsFilters() ? 'Keine Daten für diese Filter.' : 'Noch keine Daten für ' + escapeHtml(getModeName(state.statsModeId)) + '.') + '</div>';
     return html;
   }
 
@@ -1059,8 +1096,8 @@ function renderStatistikView() {
   if (withVolle.length > 0) {
     html += renderBreakdownToggle();
     if (state.statsBreakdown === 'pro-bahn') {
-      html += renderMultiChartBlock('Volle', buildLaneSeries(withVolle, 'volle'), { selectedId: sel });
-      html += renderMultiChartBlock('Abräumer', buildLaneSeries(withVolle, 'abraeumer'), { selectedId: sel });
+      html += renderMultiChartBlock('Volle', buildLaneSeries(withVolle, 'volle'), { selectedId: sel }, withVolle);
+      html += renderMultiChartBlock('Abräumer', buildLaneSeries(withVolle, 'abraeumer'), { selectedId: sel }, withVolle);
     } else {
       var withVolleStats = statsArr.filter(function (s) { return s.hasVolleData; });
       html += renderChartBlock('Volle', withVolleStats.map(function (s) { return { date: s.date, value: s.totalVolle, id: s.id }; }), { showTrend: true, selectedId: sel });
@@ -1114,10 +1151,7 @@ function renderMehrView() {
     '<p class="settings-hint">' + (hasNativeStorage()
       ? 'Deine Daten werden über diesen Chat gespeichert und sind hier jederzeit wieder abrufbar.'
       : 'Diese Seite läuft gerade außerhalb von Claude. Deine Daten werden lokal in diesem Browser gespeichert und bleiben auch nach dem Schließen erhalten, solange du dieselbe Datei im selben Browser öffnest. Für einen Wechsel des Geräts oder Browsers nutze am besten den Export.')
-      + '</p>' + ((IS_IOS && !IS_STANDALONE && !hasNativeStorage())
-        ? '<p class="settings-hint">Tipp fürs iPhone: In Safari über „Teilen" → „Zum Home-Bildschirm" hinzufügen. Als Home-Bildschirm-App bleiben die Daten dauerhaft erhalten – Safari kann Daten von Seiten, die länger nicht geöffnet wurden, sonst nach einigen Tagen löschen.</p>'
-        : '')
-      + '</div>';
+      + '</p></div>';
   return html;
 }
 
@@ -1151,6 +1185,12 @@ function handleAction(action, data) {
     case 'delete-entry': deleteEntry(data.id); break;
     case 'set-filter-type': state.filters.type = data.value; state.selectedChartEntryId = null; render(); break;
     case 'set-breakdown': state.statsBreakdown = data.value; render(); break;
+    case 'set-date-preset':
+      state.dateFilter.preset = data.value;
+      if (data.value !== 'custom') { state.dateFilter.start = ''; state.dateFilter.end = ''; }
+      state.selectedChartEntryId = null;
+      render();
+      break;
     case 'toggle-selection-mode': state.selectionMode = !state.selectionMode; state.selectedIds = []; state.expandedEntryId = null; render(); break;
     case 'toggle-select-entry':
       var si = state.selectedIds.indexOf(data.id);
@@ -1175,8 +1215,8 @@ function handleAction(action, data) {
 function saveNewCustomMode() {
   var name = state.form.newModeName.trim();
   var throwsVal = Number(state.form.newModeThrows);
-  if (!name) { appAlert('Bitte einen Namen für den Modus angeben.'); return; }
-  if (!throwsVal || throwsVal <= 0) { appAlert('Bitte eine gültige Wurfanzahl angeben.'); return; }
+  if (!name) { alert('Bitte einen Namen für den Modus angeben.'); return; }
+  if (!throwsVal || throwsVal <= 0) { alert('Bitte eine gültige Wurfanzahl angeben.'); return; }
   var mode = { id: 'custom_' + genId(), name: name, throws: throwsVal, createdAt: new Date().toISOString() };
   state.customModes.push(mode);
   persistCustomModes();
@@ -1185,30 +1225,31 @@ function saveNewCustomMode() {
   showToast('Modus angelegt');
 }
 
-async function deleteCustomMode(id) {
+function deleteCustomMode(id) {
   var inUse = state.entries.some(function (e) { return e.modeId === id; });
   var msg = inUse ? 'Dieser Modus wird bereits in gespeicherten Einträgen verwendet und kann danach nicht mehr neu ausgewählt werden. Trotzdem löschen?' : 'Diesen Modus wirklich löschen?';
-  if (!(await appConfirm(msg))) return;
+  if (!confirm(msg)) return;
   state.customModes = state.customModes.filter(function (m) { return m.id !== id; });
   persistCustomModes();
   if (state.form.modeId === id) { state.form.modeId = 'klassisch120'; state.form.lanes = makeEmptyLanes('klassisch120'); }
+  if (state.statsModeId === id) { state.statsModeId = 'klassisch120'; persistStatsMode(); }
   render();
   showToast('Modus gelöscht');
 }
 
 function saveNewLocation() {
   var name = state.form.newLocationName.trim();
-  if (!name) { appAlert('Bitte einen Namen für den Ort/Bahn angeben.'); return; }
+  if (!name) { alert('Bitte einen Namen für den Ort/Bahn angeben.'); return; }
   if (state.locations.indexOf(name) === -1) { state.locations.push(name); state.locations.sort(); persistLocations(); }
   state.form.location = name; state.form.showNewLocationForm = false; state.form.newLocationName = '';
   render();
   showToast('Ort hinzugefügt');
 }
 
-async function saveEntry() {
+function saveEntry() {
   var f = state.form;
-  if (!f.date) { appAlert('Bitte ein Datum angeben.'); return; }
-  if (f.type === 'wettkampf' && !f.location.trim()) { appAlert('Bitte Ort/Bahn angeben.'); return; }
+  if (!f.date) { alert('Bitte ein Datum angeben.'); return; }
+  if (f.type === 'wettkampf' && !f.location.trim()) { alert('Bitte Ort/Bahn angeben.'); return; }
 
   var existing = f.editingId ? state.entries.find(function (e) { return e.id === f.editingId; }) : null;
   var entry = {
@@ -1224,11 +1265,11 @@ async function saveEntry() {
   if (CLASSIC_MODES[f.modeId]) {
     for (var i = 0; i < f.lanes.length; i++) {
       var l = f.lanes[i];
-      if (l.volle === '' || l.total === '' || l.fehlwuerfe === '') { appAlert('Bitte alle Felder für Bahn ' + (i + 1) + ' ausfüllen.'); return; }
+      if (l.volle === '' || l.total === '' || l.fehlwuerfe === '') { alert('Bitte alle Felder für Bahn ' + (i + 1) + ' ausfüllen.'); return; }
     }
     var badLane = -1;
     for (var j = 0; j < f.lanes.length; j++) { if (Number(f.lanes[j].total) < Number(f.lanes[j].volle)) { badLane = j; break; } }
-    if (badLane !== -1 && !(await appConfirm('Bei Bahn ' + (badLane + 1) + ' ist „Gesamt" kleiner als „Volle". Trotzdem speichern?'))) return;
+    if (badLane !== -1 && !confirm('Bei Bahn ' + (badLane + 1) + ' ist „Gesamt" kleiner als „Volle". Trotzdem speichern?')) return;
 
     var badFehl = -1, prevCheck = 0;
     for (var k = 0; k < f.lanes.length; k++) {
@@ -1236,7 +1277,7 @@ async function saveEntry() {
       if (cf < prevCheck) { badFehl = k; break; }
       prevCheck = cf;
     }
-    if (badFehl !== -1 && !(await appConfirm('Bei Bahn ' + (badFehl + 1) + ' ist die Fehlwürfe-Zwischensumme kleiner als bei der vorherigen Bahn. Trotzdem speichern?'))) return;
+    if (badFehl !== -1 && !confirm('Bei Bahn ' + (badFehl + 1) + ' ist die Fehlwürfe-Zwischensumme kleiner als bei der vorherigen Bahn. Trotzdem speichern?')) return;
 
     var prevFehl = 0;
     entry.lanes = [];
@@ -1246,7 +1287,7 @@ async function saveEntry() {
       prevFehl = cum;
     }
   } else {
-    if (f.score === '') { appAlert('Bitte die Punktzahl angeben.'); return; }
+    if (f.score === '') { alert('Bitte die Punktzahl angeben.'); return; }
     entry.score = Number(f.score);
     entry.fehlwuerfe = f.fehlwuerfe === '' ? null : Number(f.fehlwuerfe);
   }
@@ -1311,8 +1352,8 @@ function startDuplicateEntry(id) {
   showToast('Vorlage übernommen – Werte für heute eintragen');
 }
 
-async function deleteEntry(id) {
-  if (!(await appConfirm('Diesen Eintrag wirklich löschen?'))) return;
+function deleteEntry(id) {
+  if (!confirm('Diesen Eintrag wirklich löschen?')) return;
   var idx = state.entries.findIndex(function (e) { return e.id === id; });
   if (idx === -1) return;
   var removed = state.entries[idx];
@@ -1333,9 +1374,9 @@ function undoDelete() {
   render();
 }
 
-async function deleteSelectedEntries() {
+function deleteSelectedEntries() {
   if (state.selectedIds.length === 0) return;
-  if (!(await appConfirm(state.selectedIds.length + ' Einträge wirklich löschen?'))) return;
+  if (!confirm(state.selectedIds.length + ' Einträge wirklich löschen?')) return;
   state.entries = state.entries.filter(function (e) { return state.selectedIds.indexOf(e.id) === -1; });
   persistEntries();
   state.selectedIds = [];
@@ -1347,7 +1388,7 @@ async function deleteSelectedEntries() {
 function saveGoal() {
   var modeId = state.goalForm.modeId;
   var target = Number(state.goalForm.target);
-  if (!target || target <= 0) { appAlert('Bitte eine gültige Zielpunktzahl angeben.'); return; }
+  if (!target || target <= 0) { alert('Bitte eine gültige Zielpunktzahl angeben.'); return; }
   state.goal = { modeId: modeId, target: target };
   persistGoal();
   state.goalForm = { modeId: 'klassisch120', target: '' };
@@ -1355,8 +1396,8 @@ function saveGoal() {
   showToast('Ziel gespeichert');
 }
 
-async function clearGoal() {
-  if (!(await appConfirm('Ziel wirklich entfernen?'))) return;
+function clearGoal() {
+  if (!confirm('Ziel wirklich entfernen?')) return;
   state.goal = null;
   persistGoal();
   render();
@@ -1366,58 +1407,24 @@ async function clearGoal() {
 /* ---------- Export / Import ---------- */
 function exportData() {
   var payload = { app: 'kegelbuch', version: 1, exportedAt: new Date().toISOString(), entries: state.entries, customModes: state.customModes, locations: state.locations, goal: state.goal };
-  var json = JSON.stringify(payload, null, 2);
-  var fileName = 'kegelbuch-export-' + todayISO() + '.json';
-
-  /* iOS: Download per <a download> ist v. a. als Home-Bildschirm-App unzuverlaessig -> Teilen-Menue ("In Dateien sichern") */
-  var shareFile = IS_IOS ? getShareableFile(json, fileName) : null;
-  if (shareFile) {
-    navigator.share({ files: [shareFile], title: 'Kegelbuch-Export' })
-      .then(function () { markExported('Export gesichert'); })
-      .catch(function (err) {
-        if (err && err.name === 'AbortError') return;
-        downloadExport(json, fileName);
-      });
-    return;
-  }
-  downloadExport(json, fileName);
-}
-
-function getShareableFile(json, fileName) {
-  if (!navigator.share || !navigator.canShare || typeof File === 'undefined') return null;
-  var types = ['application/json', 'text/plain'];
-  for (var i = 0; i < types.length; i++) {
-    try {
-      var f = new File([json], fileName, { type: types[i] });
-      if (navigator.canShare({ files: [f] })) return f;
-    } catch (e) { /* naechsten Typ probieren */ }
-  }
-  return null;
-}
-
-function downloadExport(json, fileName) {
-  var blob = new Blob([json], { type: 'application/json' });
+  var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = url; a.download = fileName;
+  a.href = url; a.download = 'kegelbuch-export-' + todayISO() + '.json';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-  markExported('Export gestartet');
-}
-
-function markExported(msg) {
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   state.lastExportAt = new Date().toISOString();
   persistLastExport();
   render();
-  showToast(msg);
+  showToast('Export gestartet');
 }
 
 function handleImportFile(file) {
   var reader = new FileReader();
   reader.onload = function (e) {
     var data;
-    try { data = JSON.parse(e.target.result); } catch (err) { appAlert('Die Datei konnte nicht gelesen werden. Ist es eine gültige Kegelbuch-Export-Datei?'); return; }
-    if (!data || !Array.isArray(data.entries)) { appAlert('Diese Datei sieht nicht wie ein gültiger Kegelbuch-Export aus.'); return; }
+    try { data = JSON.parse(e.target.result); } catch (err) { alert('Die Datei konnte nicht gelesen werden. Ist es eine gültige Kegelbuch-Export-Datei?'); return; }
+    if (!data || !Array.isArray(data.entries)) { alert('Diese Datei sieht nicht wie ein gültiger Kegelbuch-Export aus.'); return; }
 
     var existingIds = {};
     state.entries.forEach(function (en) { existingIds[en.id] = true; });
@@ -1437,7 +1444,7 @@ function handleImportFile(file) {
     render();
     showToast(added + ' Einträge importiert' + (skipped ? ', ' + skipped + ' bereits vorhanden' : ''));
   };
-  reader.onerror = function () { appAlert('Die Datei konnte nicht gelesen werden.'); };
+  reader.onerror = function () { alert('Die Datei konnte nicht gelesen werden.'); };
   reader.readAsText(file);
 }
 
@@ -1493,6 +1500,8 @@ function attachListeners() {
     if (!(el.dataset && el.dataset.bind)) return;
     setStateByPath(el.dataset.bind, el.value);
     if (el.dataset.bind === 'form.location' && el.value === '__new__') { state.form.location = ''; state.form.showNewLocationForm = true; }
+    if (el.dataset.bind === 'statsModeId') { persistStatsMode(); state.selectedChartEntryId = null; }
+    if (el.dataset.bind === 'filters.location' || el.dataset.bind === 'filters.modeId') { state.selectedChartEntryId = null; }
     if (el.tagName === 'SELECT') render();
   });
 
@@ -1500,31 +1509,10 @@ function attachListeners() {
     if (e.target.files && e.target.files[0]) handleImportFile(e.target.files[0]);
     e.target.value = '';
   });
-
-  /* Dialog-Buttons */
-  document.getElementById('dialog-ok').addEventListener('click', function () { closeDialog(true); });
-  document.getElementById('dialog-cancel').addEventListener('click', function () { closeDialog(false); });
-  document.getElementById('dialog').addEventListener('click', function (e) { if (e.target === this) closeDialog(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dialogResolve) closeDialog(false); });
-
-  /* iOS: Nach dem Schliessen der Tastatur bleibt die Seite manchmal verschoben -> zuruecksetzen */
-  document.addEventListener('focusout', function () {
-    setTimeout(function () {
-      var a = document.activeElement;
-      var typing = a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT');
-      if (!typing && (window.scrollY || document.documentElement.scrollTop)) window.scrollTo(0, 0);
-    }, 60);
-  });
 }
 
 /* ---------- Start ---------- */
-async function init() {
-  attachListeners();
-  render();
-  /* Browser um dauerhaften Speicher bitten (verhindert Loeschen durch Safari, wo unterstuetzt) */
-  try { if (!hasNativeStorage() && navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {}); } catch (e) {}
-  await loadData();
-}
+async function init() { attachListeners(); render(); await loadData(); }
 init();
 </script>
 </body>
