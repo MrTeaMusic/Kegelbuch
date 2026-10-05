@@ -443,6 +443,7 @@ var state = {
   selectedChartEntryId: null,
   statsLayout: defaultStatsLayout(),
   statsEditMode: false,
+  confirmResetStatsLayout: false,
   form: {
     type: 'training',
     modeId: 'klassisch120',
@@ -690,7 +691,7 @@ function buildLaneSeries(entries, field) {
     var pts = [];
     entries.forEach(function (e, idx) {
       if (e.lanes && e.lanes[i]) {
-        var val = field === 'volle' ? Number(e.lanes[i].volle) : (Number(e.lanes[i].total) - Number(e.lanes[i].volle));
+        var val = field === 'volle' ? Number(e.lanes[i].volle) : field === 'total' ? Number(e.lanes[i].total) : (Number(e.lanes[i].total) - Number(e.lanes[i].volle));
         pts.push({ date: e.date, value: val, id: e.id, index: idx });
       }
     });
@@ -854,6 +855,13 @@ function renderMultiLineChartSVG(series, options, axisEntries) {
   svg += '<line x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
   svg += '<line x1="' + padL + '" y1="' + (padT + chartH) + '" x2="' + (padL + chartW) + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
 
+  /* Durchschnittslinie ueber alle Bahnen: ein einziger Wert = Schnitt aller angezeigten
+     Bahn-Werte (also was man im Schnitt pro Bahn macht), als waagerechte Linie mit Zahl am Rand. */
+  var avgAll = allValues.reduce(function (a, b) { return a + b; }, 0) / allValues.length;
+  var showAvgLine = Math.min.apply(null, allValues) !== Math.max.apply(null, allValues);
+  var yAvg = yFor(avgAll);
+  if (showAvgLine) svg += '<line x1="' + padL + '" y1="' + yAvg.toFixed(1) + '" x2="' + (padL + chartW) + '" y2="' + yAvg.toFixed(1) + '" class="chart-avg-line" />';
+
   series.forEach(function (s) {
     var pts = s.data.slice().sort(function (a, b) { return a.index - b.index; });
     var d = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + xFor(p.index).toFixed(1) + ',' + yFor(p.value).toFixed(1); }).join(' ');
@@ -870,6 +878,11 @@ function renderMultiLineChartSVG(series, options, axisEntries) {
 
   svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" class="chart-label" text-anchor="end">' + maxV.toFixed(0) + '</text>';
   svg += '<text x="' + (padL - 6) + '" y="' + (padT + chartH) + '" class="chart-label" text-anchor="end">' + minV.toFixed(0) + '</text>';
+  if (showAvgLine) {
+    var loL = padT + 4 + 10, hiL = padT + chartH - 10;
+    var yAvgLabel = loL <= hiL ? Math.min(Math.max(yAvg + 3, loL), hiL) : yAvg + 3;
+    svg += '<text x="' + (padL - 6) + '" y="' + yAvgLabel.toFixed(1) + '" class="chart-label chart-label--avg" text-anchor="end">Ø ' + Math.round(avgAll) + '</text>';
+  }
   if (n > 0) {
     svg += '<text x="' + padL + '" y="' + (padT + chartH + 14) + '" class="chart-label" text-anchor="start">' + formatDateShort(axisEntries[0].date) + '</text>';
     svg += '<text x="' + (padL + chartW) + '" y="' + (padT + chartH + 14) + '" class="chart-label" text-anchor="end">' + formatDateShort(axisEntries[n - 1].date) + '</text>';
@@ -1252,7 +1265,16 @@ function renderStatsLayoutEditor() {
       '</span></div>';
   });
   html += '</div>';
-  html += '<div class="save-bar"><button type="button" class="btn btn--primary" data-action="toggle-stats-edit-mode">Fertig</button></div>';
+  /* Zweistufige Bestaetigung direkt im Button statt confirm(): native Dialoge werden in manchen
+     Umgebungen (z. B. eingebettete Ansichten) stillschweigend unterdrueckt, dann wuerde der
+     Button scheinbar gar nichts tun. */
+  if (state.confirmResetStatsLayout) {
+    html += '<div class="save-bar"><button type="button" class="btn btn--ghost" data-action="cancel-reset-stats-layout">Abbrechen</button>' +
+      '<button type="button" class="btn btn--danger" data-action="reset-stats-layout">Wirklich zurücksetzen?</button></div>';
+  } else {
+    html += '<div class="save-bar"><button type="button" class="btn btn--ghost" data-action="reset-stats-layout">Auf Standard zurücksetzen</button>' +
+      '<button type="button" class="btn btn--primary" data-action="toggle-stats-edit-mode">Fertig</button></div>';
+  }
   return html;
 }
 
@@ -1292,10 +1314,21 @@ function renderStatistikView() {
   function tileHtml(value, label) { return '<div class="summary-tile"><div class="summary-tile__value">' + value + '</div><div class="summary-tile__label">' + label + '</div></div>'; }
 
   var breakdownToggleRendered = false;
+  function breakdownToggleOnce() {
+    if (breakdownToggleRendered) return '';
+    breakdownToggleRendered = true;
+    return renderBreakdownToggle();
+  }
+  function renderGesamtBlock() {
+    var out = withVolle.length > 0 ? breakdownToggleOnce() : '';
+    if (withVolle.length > 0 && state.statsBreakdown === 'pro-bahn') {
+      return out + renderMultiChartBlock('Gesamtpunkte', buildLaneSeries(withVolle, 'total'), { selectedId: sel }, withVolle);
+    }
+    return out + renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id }; }), { showTrend: true, highlightBest: true, selectedId: sel });
+  }
   function renderVolleOrAbraeumerBlock(which) {
     if (withVolle.length === 0) return '';
-    var out = '';
-    if (!breakdownToggleRendered) { out += renderBreakdownToggle(); breakdownToggleRendered = true; }
+    var out = breakdownToggleOnce();
     var title = which === 'volle' ? 'Volle' : 'Abräumer';
     if (state.statsBreakdown === 'pro-bahn') {
       out += renderMultiChartBlock(title, buildLaneSeries(withVolle, which), { selectedId: sel }, withVolle);
@@ -1314,7 +1347,7 @@ function renderStatistikView() {
     'global-perthrow': { kind: 'block', html: renderGlobalPerThrowBlock },
     'ziel': { kind: 'block', html: renderGoalProgress },
     'vergleich': { kind: 'block', html: function () { return renderTypeComparisonBlock(applyFiltersIgnoringType(state.entries)); } },
-    'chart-gesamt': { kind: 'block', html: function () { return renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id }; }), { showTrend: true, highlightBest: true, selectedId: sel }); } },
+    'chart-gesamt': { kind: 'block', html: renderGesamtBlock },
     'chart-volle': { kind: 'block', html: function () { return renderVolleOrAbraeumerBlock('volle'); } },
     'chart-abraeumer': { kind: 'block', html: function () { return renderVolleOrAbraeumerBlock('abraeumer'); } },
     'chart-fehlwuerfe': { kind: 'block', html: function () { return withFehl.length > 0 ? renderChartBlock('Fehlwürfe', withFehl.map(function (s) { return { date: s.date, value: s.totalFehlwuerfe, id: s.id }; }), { showTrend: true, selectedId: sel }) : ''; } },
@@ -1456,13 +1489,23 @@ function handleAction(action, data) {
     case 'clear-goal': clearGoal(); break;
     case 'export-data': exportData(); break;
     case 'trigger-import': document.getElementById('import-file-input').click(); break;
-    case 'toggle-stats-edit-mode': state.statsEditMode = !state.statsEditMode; render(); break;
+    case 'toggle-stats-edit-mode': state.statsEditMode = !state.statsEditMode; state.confirmResetStatsLayout = false; render(); break;
+    case 'reset-stats-layout': resetStatsLayout(); break;
+    case 'cancel-reset-stats-layout': state.confirmResetStatsLayout = false; render(); break;
     case 'toggle-stats-item': toggleStatsLayoutItem(data.id); render(); break;
     case 'move-stats-item': moveStatsLayoutItem(data.id, data.dir); render(); break;
   }
 }
 
 /* ---------- Statistik-Layout: anpassbare Reihenfolge/Sichtbarkeit ---------- */
+function resetStatsLayout() {
+  if (!state.confirmResetStatsLayout) { state.confirmResetStatsLayout = true; render(); return; }
+  state.confirmResetStatsLayout = false;
+  state.statsLayout = defaultStatsLayout();
+  persistStatsLayout();
+  render();
+  showToast('Layout zurückgesetzt');
+}
 function toggleStatsLayoutItem(id) {
   var item = state.statsLayout.find(function (x) { return x.id === id; });
   if (!item) return;
