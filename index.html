@@ -75,6 +75,8 @@ button:disabled { opacity: 0.45; cursor: default; }
 
 .view-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .view-header h1 { font-family: var(--font-display); font-weight: 600; font-size: 23px; margin: 0; color: var(--color-ink); }
+.icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--color-line); background: var(--color-surface); color: var(--color-ink-soft); font-size: 16px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.icon-btn:active { background: var(--color-line); }
 
 /* Type toggle */
 .type-toggle { display: flex; gap: 8px; margin-bottom: 20px; }
@@ -133,6 +135,14 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
 .filter-toggle { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 .filter-toggle__btn { flex: 1 1 auto; min-width: 64px; padding: 8px 6px; border-radius: var(--radius-pill); border: 1.5px solid var(--color-line); background: var(--color-surface); font-size: 13px; font-weight: 500; color: var(--color-ink-soft); }
 .filter-toggle__btn.is-active { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
+.filter-toggle-chip-wrap { position: relative; display: inline-flex; flex: 1 1 auto; min-width: 64px; }
+.filter-toggle-chip-wrap .filter-toggle__btn { flex: 1 1 auto; width: 100%; }
+.filter-toggle-chip__del {
+  position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--color-bg); background: var(--color-alert); color: #fff; font-size: 11px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.filter-toggle__btn--add { flex: 0 0 auto; min-width: 40px; font-weight: 700; border-style: dashed; color: var(--color-ink-faint); }
 .filter-selects { display: flex; gap: 8px; }
 .filter-selects .select-input { padding: 8px 10px; font-size: 13px; }
 .sort-row { display: flex; gap: 8px; align-items: center; margin: 0 0 16px; }
@@ -231,6 +241,21 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
 .settings-section__title { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--color-primary); margin-bottom: 6px; }
 .settings-hint { font-size: 13px; color: var(--color-ink-soft); margin: 0 0 12px; line-height: 1.5; }
 .settings-section .btn { width: 100%; }
+
+/* Statistik-Layout-Editor */
+.layout-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.layout-row { display: flex; align-items: center; gap: 8px; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-control); padding: 8px 10px; touch-action: pan-y; }
+.layout-row--hidden { opacity: 0.5; }
+.layout-row--dragging { opacity: 0.75; box-shadow: 0 4px 14px rgba(0,0,0,0.18); position: relative; z-index: 5; }
+.layout-row--drop-before { border-top: 2px solid var(--color-primary); }
+.layout-row--drop-after { border-bottom: 2px solid var(--color-primary); }
+.layout-row__handle { touch-action: none; cursor: grab; color: var(--color-ink-faint); font-size: 16px; line-height: 1; padding: 2px 4px; flex: 0 0 auto; user-select: none; }
+.layout-row__check { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; font-size: 14px; color: var(--color-ink); }
+.layout-row__check input { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--color-primary); }
+.layout-row__check span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.layout-row__arrows { display: flex; gap: 2px; flex: 0 0 auto; }
+.layout-row__arrow { width: 28px; height: 28px; border-radius: var(--radius-control); border: 1px solid var(--color-line); background: var(--color-bg); color: var(--color-ink-soft); font-size: 11px; display: flex; align-items: center; justify-content: center; }
+.layout-row__arrow:disabled { opacity: 0.3; }
 .export-reminder { font-size: 12px; color: var(--color-accent); background: var(--color-accent-soft); border-radius: var(--radius-control); padding: 8px 10px; margin: 0 0 12px; }
 
 /* Empty / loading states */
@@ -269,7 +294,61 @@ var CLASSIC_MODES = {
 };
 var LANE_COLORS = ['#1F4432', '#B87A2E', '#5B7B9A', '#8B4A6B', '#C0562E', '#3F6B4E'];
 var DEFAULT_TRAINING_LOCATION = 'Ammendorf';
-var TREND_WINDOW = 3;
+
+/* Statistik-Layout: eine einzige flache, frei sortierbare Liste - jede Kachel zaehlt genauso
+   als eigenstaendiges Element wie jedes Diagramm, keine erzwungene Gruppierung. Reihenfolge
+   hier = Standard-Reihenfolge beim ersten Start. */
+var STATS_ITEM_DEFS = [
+  { id: 'ziel', label: 'Ziel-Fortschritt', kind: 'block' },
+  { id: 'vergleich', label: 'Wettkampf/Training-Vergleich', kind: 'block' },
+  { id: 'tile-count', label: 'Kachel: Einträge', kind: 'tile' },
+  { id: 'tile-avg', label: 'Kachel: Schnitt', kind: 'tile' },
+  { id: 'tile-best', label: 'Kachel: Beste Punktzahl', kind: 'tile' },
+  { id: 'tile-perthrow', label: 'Kachel: Schnitt/Wurf', kind: 'tile' },
+  { id: 'global-perthrow', label: 'Gesamtschnitt Punkte/Wurf (alle Modi)', kind: 'block' },
+  { id: 'chart-gesamt', label: 'Diagramm: Gesamtpunkte', kind: 'block' },
+  { id: 'chart-volle', label: 'Diagramm: Volle', kind: 'block' },
+  { id: 'chart-abraeumer', label: 'Diagramm: Abräumer', kind: 'block' },
+  { id: 'chart-fehlwuerfe', label: 'Diagramm: Fehlwürfe', kind: 'block' },
+  { id: 'ort-stats', label: 'Orts-Statistik', kind: 'block' }
+];
+function defaultStatsLayout() { return STATS_ITEM_DEFS.map(function (d) { return { id: d.id, visible: true }; }); }
+/* Vorwaerts-/Rueckwaertskompatibel: unbekannte gespeicherte IDs (aus einer aelteren/neueren
+   Version) werden verworfen, neue IDs, die es beim letzten Speichern noch nicht gab, werden
+   sichtbar ans Ende angehaengt. */
+function mergeStatsLayout(stored) {
+  var result = [];
+  var seen = {};
+  (stored || []).forEach(function (item) {
+    if (STATS_ITEM_DEFS.some(function (d) { return d.id === item.id; })) {
+      result.push({ id: item.id, visible: item.visible !== false });
+      seen[item.id] = true;
+    }
+  });
+  STATS_ITEM_DEFS.forEach(function (d) { if (!seen[d.id]) result.push({ id: d.id, visible: true }); });
+  return result;
+}
+
+/* Statistik-Zeitfilter: die Tages-Schnellauswahl (Standard 7/30/90) ist frei konfigurierbar -
+   state.datePresets haelt die aktuell gewaehlten Tageszahlen. */
+var DATE_PRESET_MAX_DAYS = 3650;
+var DATE_PRESET_MAX_COUNT = 12;
+function defaultDatePresets() { return [7, 30, 90]; }
+/* Verwirft ungueltige/doppelte Eintraege statt alles auf den Default zurueckzusetzen - ein
+   absichtlich leeres Array (Nutzer hat alle Presets entfernt) bleibt also leer. */
+function sanitizeDatePresets(arr) {
+  if (!Array.isArray(arr)) return defaultDatePresets();
+  var seen = {};
+  var out = [];
+  arr.forEach(function (v) {
+    var n = Math.round(Number(v));
+    if (!n || n <= 0 || n > DATE_PRESET_MAX_DAYS || seen[n]) return;
+    seen[n] = true;
+    out.push(n);
+  });
+  out.sort(function (a, b) { return a - b; });
+  return out;
+}
 
 /* ---------- Hilfsfunktionen ---------- */
 function todayISO() {
@@ -308,12 +387,15 @@ function getModeName(modeId) {
   return cm ? cm.name : 'Gelöschter Modus';
 }
 
-function movingAverage(values, windowSize) {
+/* Laufender (kumulativer) Durchschnitt: an Position i der Durchschnitt aller Werte von
+   Anfang bis einschließlich i - zeigt also "der Schnitt zu diesem Zeitpunkt", nicht den
+   gleitenden Schnitt eines festen Fensters der letzten paar Spiele. */
+function runningAverage(values) {
   var result = [];
+  var sum = 0;
   for (var i = 0; i < values.length; i++) {
-    var start = Math.max(0, i - windowSize + 1);
-    var slice = values.slice(start, i + 1);
-    result.push(slice.reduce(function (a, b) { return a + b; }, 0) / slice.length);
+    sum += values[i];
+    result.push(sum / (i + 1));
   }
   return result;
 }
@@ -353,9 +435,14 @@ var state = {
   statsBreakdown: 'gesamt',
   statsModeId: 'klassisch120',
   dateFilter: { preset: 'alle', start: '', end: '' },
+  datePresets: defaultDatePresets(),
+  newDatePresetValue: '',
+  showNewDatePresetForm: false,
   selectionMode: false,
   selectedIds: [],
   selectedChartEntryId: null,
+  statsLayout: defaultStatsLayout(),
+  statsEditMode: false,
   form: {
     type: 'training',
     modeId: 'klassisch120',
@@ -392,6 +479,10 @@ async function loadData() {
   state.lastExportAt = le || null;
   var sm = await storageAdapter.get('kegel_stats_mode');
   state.statsModeId = sm || 'klassisch120';
+  var slRaw = await storageAdapter.get('kegel_stats_layout');
+  state.statsLayout = mergeStatsLayout(slRaw ? JSON.parse(slRaw) : null);
+  var dpRaw = await storageAdapter.get('kegel_date_presets');
+  state.datePresets = dpRaw ? sanitizeDatePresets(JSON.parse(dpRaw)) : defaultDatePresets();
 
   var changed = false;
   state.entries.forEach(function (en) {
@@ -416,6 +507,8 @@ async function persistLocations() { var ok = await storageAdapter.set('kegel_loc
 async function persistGoal() { var ok = await storageAdapter.set('kegel_goal', JSON.stringify(state.goal)); if (!ok) showToast('Speichern fehlgeschlagen'); }
 async function persistLastExport() { var ok = await storageAdapter.set('kegel_last_export', state.lastExportAt); if (!ok) showToast('Speichern fehlgeschlagen'); }
 async function persistStatsMode() { var ok = await storageAdapter.set('kegel_stats_mode', state.statsModeId); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistStatsLayout() { var ok = await storageAdapter.set('kegel_stats_layout', JSON.stringify(state.statsLayout)); if (!ok) showToast('Speichern fehlgeschlagen'); }
+async function persistDatePresets() { var ok = await storageAdapter.set('kegel_date_presets', JSON.stringify(state.datePresets)); if (!ok) showToast('Speichern fehlgeschlagen'); }
 
 /* ---------- Formular-Hilfsfunktionen ---------- */
 function defaultLocationFor(type) { return type === 'training' ? DEFAULT_TRAINING_LOCATION : ''; }
@@ -670,12 +763,12 @@ function renderLineChartSVG(data, options) {
   svg += '<line x1="' + padL + '" y1="' + (padT + chartH) + '" x2="' + (padL + chartW) + '" y2="' + (padT + chartH) + '" class="chart-axis" />';
 
   if (options.showTrend && n >= 3) {
-    var trendValues = movingAverage(values, TREND_WINDOW);
-    /* Der letzte Trend-Punkt wird auf den Gesamtdurchschnitt (avgV, dieselbe Zahl wie die
-       durchgezogene graue Schnitt-Linie) gesetzt statt auf den rohen letzten gleitenden
-       Fensterwert. So laufen die gestrichelte Trend-Linie und die durchgezogene Schnitt-Linie
-       rechts immer sichtbar zusammen - die Glättung wirkt weiterhin auf alle vorherigen Punkte. */
-    trendValues[trendValues.length - 1] = avgV;
+    /* Trend-Linie = laufender (kumulativer) Durchschnitt: an jedem Punkt der Schnitt aller
+       Spiele bis einschließlich diesem Zeitpunkt, nicht der gleitende Schnitt der letzten
+       paar Spiele. Dadurch entspricht der letzte Punkt automatisch dem Gesamtdurchschnitt
+       (avgV) und läuft rechts immer sichtbar mit der durchgezogenen grauen Schnitt-Linie
+       zusammen - ohne das extra erzwingen zu müssen, das vorher nötig war. */
+    var trendValues = runningAverage(values);
     var trendPts = trendValues.map(function (v, i) { return { x: points[i].x, y: yForValue(v) }; });
     var trendD = trendPts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
     svg += '<path d="' + trendD + '" class="chart-trend" style="stroke:' + color + '" />';
@@ -719,14 +812,15 @@ function renderLineChartSVG(data, options) {
   svg += '<text x="' + (padL + chartW) + '" y="' + (height - 6) + '" class="chart-label" text-anchor="end">' + formatDateShort(data[n - 1].date) + '</text>';
   svg += '</svg>';
 
-  /* Legende: Trend (gleitender 3-Spiele-Schnitt, gestrichelt, in Akzentfarbe) und Schnitt
-     (fester Durchschnitt aller angezeigten Werte, durchgezogen, neutral) sehen sich als zwei
-     gestrichelte Linien sonst zu ähnlich - Legende macht eindeutig, welche Linie welchen Wert zeigt. */
+  /* Legende: Trend (laufender Durchschnitt bis zu diesem Zeitpunkt, gestrichelt, in
+     Akzentfarbe) und Schnitt (fester Durchschnitt aller angezeigten Werte, durchgezogen,
+     neutral) sehen sich als zwei gestrichelte Linien sonst zu ähnlich - Legende macht
+     eindeutig, welche Linie welchen Wert zeigt. */
   var showTrendLine = options.showTrend && n >= 3;
   if (showAvgLine || showTrendLine) {
     var legend = '<div class="chart-legend">';
     if (showAvgLine) legend += '<span class="chart-legend__item"><span class="chart-legend__swatch chart-legend__swatch--avg"></span>Schnitt</span>';
-    if (showTrendLine) legend += '<span class="chart-legend__item"><span class="chart-legend__swatch chart-legend__swatch--trend" style="border-top-color:' + color + '"></span>Trend (3 Spiele)</span>';
+    if (showTrendLine) legend += '<span class="chart-legend__item"><span class="chart-legend__swatch chart-legend__swatch--trend" style="border-top-color:' + color + '"></span>Trend (laufender Schnitt)</span>';
     legend += '</div>';
     svg += legend;
   }
@@ -911,10 +1005,25 @@ function renderStatsFilterBar() {
 
 function renderDateFilter() {
   var d = state.dateFilter;
-  var presets = [['alle', 'Gesamter Zeitraum'], ['7', '7 Tage'], ['30', '30 Tage'], ['90', '90 Tage'], ['custom', 'Zeitraum wählen']];
   var html = '<div class="filter-bar"><div class="filter-toggle">';
-  presets.forEach(function (p) { html += '<button type="button" class="filter-toggle__btn' + (d.preset === p[0] ? ' is-active' : '') + '" data-action="set-date-preset" data-value="' + p[0] + '">' + p[1] + '</button>'; });
+  html += '<button type="button" class="filter-toggle__btn' + (d.preset === 'alle' ? ' is-active' : '') + '" data-action="set-date-preset" data-value="alle">Gesamter Zeitraum</button>';
+  /* Die Tages-Presets (Standard 7/30/90) sind frei konfigurierbar: jeder Chip traegt wie bei
+     den Trainingsmodi einen kleinen Loeschen-Button in der Ecke, dazu ein "+"-Chip zum
+     Hinzufuegen eigener Werte - ohne separaten Bearbeiten-Modus, da hier nur Hinzufuegen/
+     Entfernen noetig ist, kein Sortieren. */
+  state.datePresets.forEach(function (days) {
+    var val = String(days);
+    html += '<div class="filter-toggle-chip-wrap"><button type="button" class="filter-toggle__btn' + (d.preset === val ? ' is-active' : '') + '" data-action="set-date-preset" data-value="' + val + '">' + days + ' Tage</button>' +
+      '<button type="button" class="filter-toggle-chip__del" data-action="remove-date-preset" data-value="' + val + '" aria-label="Zeitraum ' + days + ' Tage entfernen" title="Entfernen">&times;</button></div>';
+  });
+  html += '<button type="button" class="filter-toggle__btn filter-toggle__btn--add" data-action="toggle-new-date-preset-form" aria-label="Zeitraum hinzufügen" title="Zeitraum hinzufügen">+</button>';
+  html += '<button type="button" class="filter-toggle__btn' + (d.preset === 'custom' ? ' is-active' : '') + '" data-action="set-date-preset" data-value="custom">Zeitraum wählen</button>';
   html += '</div>';
+  if (state.showNewDatePresetForm) {
+    html += '<div class="new-mode-form">' +
+      '<input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Anzahl Tage, z. B. 14" value="' + escapeHtml(state.newDatePresetValue) + '" data-bind="newDatePresetValue" class="text-input">' +
+      '<button type="button" class="btn btn--small btn--primary" data-action="add-date-preset">Hinzufügen</button></div>';
+  }
   if (d.preset === 'custom') {
     html += '<div class="field-row">' +
       '<div class="field-group"><label class="field-label">Von</label><input type="date" class="text-input" value="' + escapeHtml(d.start) + '" data-bind="dateFilter.start"></div>' +
@@ -1116,8 +1225,48 @@ function renderVerlaufView() {
   return html;
 }
 
+function renderGlobalPerThrowBlock() {
+  /* Modiübergreifender Gesamtschnitt: kombiniert 100 Wurf, 120 Wurf und individuelle Modi zu
+     einem einzigen Punkte-pro-Wurf-Durchschnitt, unabhängig von der Modus-Sperre der Statistik -
+     dort wird bewusst immer nur ein Modus verglichen, hier bewusst alle zusammen. */
+  var allModesEntries = applyStatsFiltersAllModes(state.entries);
+  var allModesPerThrow = allModesEntries.map(getEntryStats).map(function (s) { return s.perThrow; }).filter(function (v) { return v !== null; });
+  var globalAvgPerThrow = allModesPerThrow.length ? (allModesPerThrow.reduce(function (a, b) { return a + b; }, 0) / allModesPerThrow.length) : null;
+  if (globalAvgPerThrow === null) return '';
+  return '<div class="global-stat-line">Ø <strong>' + globalAvgPerThrow.toFixed(2) + '</strong> Punkte/Wurf über alle ' + allModesPerThrow.length + ' Spiele' +
+    (hasActiveStatsFilters() ? ' (aktuelle Filter, alle Modi)' : ' (alle Modi)') + '</div>';
+}
+
+function renderStatsLayoutEditor() {
+  var html = '<p class="settings-hint">Blöcke und Kacheln ein-/ausblenden und per Pfeil oder Ziehen (&#8942;&#8942;) sortieren. Jede Kachel zählt als eigenes Element.</p>';
+  html += '<div class="layout-list">';
+  state.statsLayout.forEach(function (item, idx) {
+    var def = STATS_ITEM_DEFS.find(function (d) { return d.id === item.id; });
+    var label = def ? def.label : item.id;
+    html += '<div class="layout-row' + (item.visible ? '' : ' layout-row--hidden') + '" data-item-id="' + item.id + '">' +
+      '<span class="layout-row__handle" aria-label="Verschieben">&#8942;&#8942;</span>' +
+      '<label class="layout-row__check"><input type="checkbox" data-action="toggle-stats-item" data-id="' + item.id + '"' + (item.visible ? ' checked' : '') + '><span>' + escapeHtml(label) + '</span></label>' +
+      '<span class="layout-row__arrows">' +
+      '<button type="button" class="layout-row__arrow" data-action="move-stats-item" data-id="' + item.id + '" data-dir="up"' + (idx === 0 ? ' disabled' : '') + ' aria-label="Nach oben">&#9650;</button>' +
+      '<button type="button" class="layout-row__arrow" data-action="move-stats-item" data-id="' + item.id + '" data-dir="down"' + (idx === state.statsLayout.length - 1 ? ' disabled' : '') + ' aria-label="Nach unten">&#9660;</button>' +
+      '</span></div>';
+  });
+  html += '</div>';
+  html += '<div class="save-bar"><button type="button" class="btn btn--primary" data-action="toggle-stats-edit-mode">Fertig</button></div>';
+  return html;
+}
+
 function renderStatistikView() {
-  var html = '<div class="view-header"><h1>Statistik</h1></div>' + renderStatsFilterBar() + renderDateFilter();
+  var editBtn = '<button type="button" class="icon-btn" data-action="toggle-stats-edit-mode" aria-label="' +
+    (state.statsEditMode ? 'Fertig' : 'Statistik anpassen') + '">' + (state.statsEditMode ? '&#10003;' : '&#9881;') + '</button>';
+  var html = '<div class="view-header"><h1>Statistik</h1>' + editBtn + '</div>';
+
+  if (state.statsEditMode) {
+    html += renderStatsLayoutEditor();
+    return html;
+  }
+
+  html += renderStatsFilterBar() + renderDateFilter();
   var filtered = applyStatsFilters(state.entries);
   var sorted = filtered.slice().sort(function (a, b) {
     if (a.date !== b.date) return a.date > b.date ? 1 : -1;
@@ -1129,57 +1278,77 @@ function renderStatistikView() {
     return html;
   }
 
-  html += renderGoalProgress();
-  html += renderTypeComparisonBlock(applyFiltersIgnoringType(state.entries));
-
   var statsArr = sorted.map(function (e) { var s = getEntryStats(e); s.date = e.date; s.id = e.id; return s; });
   var scores = statsArr.map(function (s) { return s.totalScore; });
   var avg = Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length);
   var best = Math.max.apply(null, scores);
   var perThrowValues = statsArr.map(function (s) { return s.perThrow; }).filter(function (v) { return v !== null; });
   var avgPerThrow = perThrowValues.length ? (perThrowValues.reduce(function (a, b) { return a + b; }, 0) / perThrowValues.length) : null;
+  var sel = state.selectedChartEntryId;
+  var withVolle = sorted.filter(function (e) { return e.lanes && e.lanes.length; });
+  var withVolleStats = statsArr.filter(function (s) { return s.hasVolleData; });
+  var withFehl = statsArr.filter(function (s) { return s.totalFehlwuerfe !== null; });
 
-  html += '<div class="summary-tiles">' +
-    '<div class="summary-tile"><div class="summary-tile__value">' + scores.length + '</div><div class="summary-tile__label">Einträge</div></div>' +
-    '<div class="summary-tile"><div class="summary-tile__value">' + avg + '</div><div class="summary-tile__label">Schnitt</div></div>' +
-    '<div class="summary-tile"><div class="summary-tile__value">' + best + '</div><div class="summary-tile__label">Beste Punktzahl</div></div>' +
-    (avgPerThrow !== null ? '<div class="summary-tile"><div class="summary-tile__value">' + avgPerThrow.toFixed(2) + '</div><div class="summary-tile__label">Schnitt/Wurf</div></div>' : '') +
-    '</div>';
+  function tileHtml(value, label) { return '<div class="summary-tile"><div class="summary-tile__value">' + value + '</div><div class="summary-tile__label">' + label + '</div></div>'; }
 
-  /* Modiübergreifender Gesamtschnitt: kombiniert 100 Wurf, 120 Wurf und individuelle Modi zu
-     einem einzigen Punkte-pro-Wurf-Durchschnitt, unabhängig von der Modus-Sperre oben - dort
-     wird bewusst immer nur ein Modus verglichen, hier bewusst alle zusammen. */
-  var allModesEntries = applyStatsFiltersAllModes(state.entries);
-  var allModesPerThrow = allModesEntries.map(getEntryStats).map(function (s) { return s.perThrow; }).filter(function (v) { return v !== null; });
-  var globalAvgPerThrow = allModesPerThrow.length ? (allModesPerThrow.reduce(function (a, b) { return a + b; }, 0) / allModesPerThrow.length) : null;
-  if (globalAvgPerThrow !== null) {
-    html += '<div class="global-stat-line">Ø <strong>' + globalAvgPerThrow.toFixed(2) + '</strong> Punkte/Wurf über alle ' + allModesPerThrow.length + ' Spiele' +
-      (hasActiveStatsFilters() ? ' (aktuelle Filter, alle Modi)' : ' (alle Modi)') + '</div>';
+  var breakdownToggleRendered = false;
+  function renderVolleOrAbraeumerBlock(which) {
+    if (withVolle.length === 0) return '';
+    var out = '';
+    if (!breakdownToggleRendered) { out += renderBreakdownToggle(); breakdownToggleRendered = true; }
+    var title = which === 'volle' ? 'Volle' : 'Abräumer';
+    if (state.statsBreakdown === 'pro-bahn') {
+      out += renderMultiChartBlock(title, buildLaneSeries(withVolle, which), { selectedId: sel }, withVolle);
+    } else {
+      var field = which === 'volle' ? 'totalVolle' : 'totalAbraeumer';
+      out += renderChartBlock(title, withVolleStats.map(function (s) { return { date: s.date, value: s[field], id: s.id }; }), { showTrend: true, selectedId: sel });
+    }
+    return out;
   }
+
+  var itemRenderers = {
+    'tile-count': { kind: 'tile', html: function () { return tileHtml(scores.length, 'Einträge'); } },
+    'tile-avg': { kind: 'tile', html: function () { return tileHtml(avg, 'Schnitt'); } },
+    'tile-best': { kind: 'tile', html: function () { return tileHtml(best, 'Beste Punktzahl'); } },
+    'tile-perthrow': { kind: 'tile', html: function () { return avgPerThrow !== null ? tileHtml(avgPerThrow.toFixed(2), 'Schnitt/Wurf') : ''; } },
+    'global-perthrow': { kind: 'block', html: renderGlobalPerThrowBlock },
+    'ziel': { kind: 'block', html: renderGoalProgress },
+    'vergleich': { kind: 'block', html: function () { return renderTypeComparisonBlock(applyFiltersIgnoringType(state.entries)); } },
+    'chart-gesamt': { kind: 'block', html: function () { return renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id }; }), { showTrend: true, highlightBest: true, selectedId: sel }); } },
+    'chart-volle': { kind: 'block', html: function () { return renderVolleOrAbraeumerBlock('volle'); } },
+    'chart-abraeumer': { kind: 'block', html: function () { return renderVolleOrAbraeumerBlock('abraeumer'); } },
+    'chart-fehlwuerfe': { kind: 'block', html: function () { return withFehl.length > 0 ? renderChartBlock('Fehlwürfe', withFehl.map(function (s) { return { date: s.date, value: s.totalFehlwuerfe, id: s.id }; }), { showTrend: true, selectedId: sel }) : ''; } },
+    'ort-stats': { kind: 'block', html: function () { return renderLocationStatsBlock(applyFiltersIgnoringLocation(state.entries)); } }
+  };
 
   html += renderPointDetailPanel();
   html += '<div class="chart-hint">Tipp: auf einen Punkt tippen für die Rundendetails</div>';
 
-  var sel = state.selectedChartEntryId;
-  html += renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id }; }), { showTrend: true, highlightBest: true, selectedId: sel });
-
-  var withVolle = sorted.filter(function (e) { return e.lanes && e.lanes.length; });
-  if (withVolle.length > 0) {
-    html += renderBreakdownToggle();
-    if (state.statsBreakdown === 'pro-bahn') {
-      html += renderMultiChartBlock('Volle', buildLaneSeries(withVolle, 'volle'), { selectedId: sel }, withVolle);
-      html += renderMultiChartBlock('Abräumer', buildLaneSeries(withVolle, 'abraeumer'), { selectedId: sel }, withVolle);
-    } else {
-      var withVolleStats = statsArr.filter(function (s) { return s.hasVolleData; });
-      html += renderChartBlock('Volle', withVolleStats.map(function (s) { return { date: s.date, value: s.totalVolle, id: s.id }; }), { showTrend: true, selectedId: sel });
-      html += renderChartBlock('Abräumer', withVolleStats.map(function (s) { return { date: s.date, value: s.totalAbraeumer, id: s.id }; }), { showTrend: true, selectedId: sel });
-    }
+  /* Konsekutive sichtbare Kacheln werden optisch zu einer gemeinsamen Zeile gruppiert - das
+     schraenkt die freie Anordnung nicht ein (jede Kachel bleibt einzeln verschiebbar/ausblendbar),
+     sorgt aber in der Standard-Reihenfolge fuer das gewohnte kompakte Kachel-Layout. */
+  var pendingTiles = [];
+  function flushTiles() {
+    if (pendingTiles.length === 0) return '';
+    var out = '<div class="summary-tiles">' + pendingTiles.join('') + '</div>';
+    pendingTiles = [];
+    return out;
   }
 
-  var withFehl = statsArr.filter(function (s) { return s.totalFehlwuerfe !== null; });
-  if (withFehl.length > 0) html += renderChartBlock('Fehlwürfe', withFehl.map(function (s) { return { date: s.date, value: s.totalFehlwuerfe, id: s.id }; }), { showTrend: true, selectedId: sel });
-
-  html += renderLocationStatsBlock(applyFiltersIgnoringLocation(state.entries));
+  state.statsLayout.forEach(function (item) {
+    if (!item.visible) return;
+    var renderer = itemRenderers[item.id];
+    if (!renderer) return;
+    var out = renderer.html();
+    if (!out) return;
+    if (renderer.kind === 'tile') {
+      pendingTiles.push(out);
+    } else {
+      html += flushTiles();
+      html += out;
+    }
+  });
+  html += flushTiles();
 
   return html;
 }
@@ -1262,6 +1431,13 @@ function handleAction(action, data) {
       state.selectedChartEntryId = null;
       render();
       break;
+    case 'toggle-new-date-preset-form':
+      state.showNewDatePresetForm = !state.showNewDatePresetForm;
+      if (!state.showNewDatePresetForm) state.newDatePresetValue = '';
+      render();
+      break;
+    case 'add-date-preset': addDatePreset(); break;
+    case 'remove-date-preset': removeDatePreset(data.value); break;
     case 'toggle-selection-mode': state.selectionMode = !state.selectionMode; state.selectedIds = []; state.expandedEntryId = null; render(); break;
     case 'toggle-select-entry':
       var si = state.selectedIds.indexOf(data.id);
@@ -1280,7 +1456,35 @@ function handleAction(action, data) {
     case 'clear-goal': clearGoal(); break;
     case 'export-data': exportData(); break;
     case 'trigger-import': document.getElementById('import-file-input').click(); break;
+    case 'toggle-stats-edit-mode': state.statsEditMode = !state.statsEditMode; render(); break;
+    case 'toggle-stats-item': toggleStatsLayoutItem(data.id); render(); break;
+    case 'move-stats-item': moveStatsLayoutItem(data.id, data.dir); render(); break;
   }
+}
+
+/* ---------- Statistik-Layout: anpassbare Reihenfolge/Sichtbarkeit ---------- */
+function toggleStatsLayoutItem(id) {
+  var item = state.statsLayout.find(function (x) { return x.id === id; });
+  if (!item) return;
+  item.visible = !item.visible;
+  persistStatsLayout();
+}
+function moveStatsLayoutItem(id, dir) {
+  var idx = state.statsLayout.findIndex(function (x) { return x.id === id; });
+  if (idx === -1) return;
+  var swapIdx = dir === 'up' ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= state.statsLayout.length) return;
+  var tmp = state.statsLayout[idx];
+  state.statsLayout[idx] = state.statsLayout[swapIdx];
+  state.statsLayout[swapIdx] = tmp;
+  persistStatsLayout();
+}
+function reorderStatsLayoutByIds(orderedIds) {
+  var map = {};
+  state.statsLayout.forEach(function (x) { map[x.id] = x; });
+  var result = orderedIds.map(function (id) { return map[id]; }).filter(Boolean);
+  state.statsLayout.forEach(function (x) { if (result.indexOf(x) === -1) result.push(x); });
+  state.statsLayout = result;
 }
 
 function saveNewCustomMode() {
@@ -1306,6 +1510,29 @@ function deleteCustomMode(id) {
   if (state.statsModeId === id) { state.statsModeId = 'klassisch120'; persistStatsMode(); }
   render();
   showToast('Modus gelöscht');
+}
+
+function addDatePreset() {
+  var raw = state.newDatePresetValue;
+  var n = Math.round(Number(raw));
+  if (!raw || !n || n <= 0) { alert('Bitte eine gültige Anzahl Tage angeben.'); return; }
+  if (n > DATE_PRESET_MAX_DAYS) { alert('Bitte eine Anzahl bis ' + DATE_PRESET_MAX_DAYS + ' Tage angeben.'); return; }
+  if (state.datePresets.indexOf(n) !== -1) { alert('Diese Anzahl Tage gibt es bereits.'); return; }
+  if (state.datePresets.length >= DATE_PRESET_MAX_COUNT) { alert('Maximal ' + DATE_PRESET_MAX_COUNT + ' Zeiträume möglich.'); return; }
+  state.datePresets.push(n);
+  state.datePresets.sort(function (a, b) { return a - b; });
+  persistDatePresets();
+  state.newDatePresetValue = '';
+  state.showNewDatePresetForm = false;
+  render();
+}
+
+function removeDatePreset(value) {
+  var n = Number(value);
+  state.datePresets = state.datePresets.filter(function (v) { return v !== n; });
+  persistDatePresets();
+  if (state.dateFilter.preset === String(n)) { state.dateFilter.preset = 'alle'; state.dateFilter.start = ''; state.dateFilter.end = ''; }
+  render();
 }
 
 function saveNewLocation() {
@@ -1580,6 +1807,72 @@ function attachListeners() {
     if (e.target.files && e.target.files[0]) handleImportFile(e.target.files[0]);
     e.target.value = '';
   });
+
+  attachStatsLayoutDragHandlers(root);
+}
+
+/* Ziehen zum Sortieren im Statistik-Layout-Editor: reines Pointer-Events-basiertes
+   Drag & Drop (Maus und Touch einheitlich), ohne Bibliothek. Waehrend des Ziehens wird NICHT
+   neu gerendert (render() wuerde das gerade erfasste Element aus dem DOM entfernen und die
+   Pointer-Erfassung abbrechen) - nur die gezogene Zeile wird per transform verschoben, der
+   Zielplatz per Rahmen markiert, und die eigentliche Umsortierung + ein einziges render()
+   passiert erst beim Loslassen. */
+function attachStatsLayoutDragHandlers(root) {
+  var dragState = null;
+
+  root.addEventListener('pointerdown', function (e) {
+    var handle = e.target.closest('.layout-row__handle');
+    if (!handle) return;
+    var row = handle.closest('.layout-row');
+    if (!row) return;
+    var list = row.parentElement;
+    var rows = Array.prototype.filter.call(list.children, function (el) { return el.classList.contains('layout-row'); });
+    dragState = { id: row.dataset.itemId, row: row, rows: rows, startY: e.clientY, pointerId: e.pointerId, dropIndex: rows.indexOf(row) };
+    row.classList.add('layout-row--dragging');
+    try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+    e.preventDefault();
+  });
+
+  document.addEventListener('pointermove', function (e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    e.preventDefault();
+    var deltaY = e.clientY - dragState.startY;
+    dragState.row.style.transform = 'translateY(' + deltaY + 'px)';
+
+    var others = dragState.rows.filter(function (r) { return r !== dragState.row; });
+    var newIndex = others.length;
+    for (var i = 0; i < others.length; i++) {
+      var rect = others[i].getBoundingClientRect();
+      var mid = rect.top + rect.height / 2;
+      if (e.clientY < mid) { newIndex = i; break; }
+    }
+    dragState.dropIndex = newIndex;
+    others.forEach(function (r, i) {
+      r.classList.toggle('layout-row--drop-before', i === newIndex);
+      r.classList.remove('layout-row--drop-after');
+    });
+    if (newIndex === others.length && others.length) others[others.length - 1].classList.add('layout-row--drop-after');
+  });
+
+  function finishDrag(commit) {
+    if (!dragState) return;
+    var ds = dragState;
+    dragState = null;
+    ds.row.classList.remove('layout-row--dragging');
+    ds.row.style.transform = '';
+    ds.rows.forEach(function (r) { r.classList.remove('layout-row--drop-before', 'layout-row--drop-after'); });
+    if (commit) {
+      var others = ds.rows.filter(function (r) { return r !== ds.row; });
+      var ids = others.map(function (r) { return r.dataset.itemId; });
+      ids.splice(ds.dropIndex, 0, ds.id);
+      reorderStatsLayoutByIds(ids);
+      persistStatsLayout();
+    }
+    render();
+  }
+
+  document.addEventListener('pointerup', function (e) { if (dragState && e.pointerId === dragState.pointerId) finishDrag(true); });
+  document.addEventListener('pointercancel', function (e) { if (dragState && e.pointerId === dragState.pointerId) finishDrag(false); });
 }
 
 /* ---------- Start ---------- */
