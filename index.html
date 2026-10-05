@@ -843,7 +843,8 @@ function renderMultiLineChartSVG(series, options, axisEntries) {
 
   var allValues = [];
   series.forEach(function (s) { s.data.forEach(function (d) { allValues.push(d.value); }); });
-  var minV = Math.min.apply(null, allValues), maxV = Math.max.apply(null, allValues);
+  var rawMinV = Math.min.apply(null, allValues), rawMaxV = Math.max.apply(null, allValues);
+  var minV = rawMinV, maxV = rawMaxV;
   if (minV === maxV) { minV -= 1; maxV += 1; } else { var pad = (maxV - minV) * 0.12; minV -= pad; maxV += pad; }
 
   var n = axisEntries.length;
@@ -876,13 +877,17 @@ function renderMultiLineChartSVG(series, options, axisEntries) {
     });
   });
 
-  svg += '<text x="' + (padL - 6) + '" y="' + (padT + 4) + '" class="chart-label" text-anchor="end">' + maxV.toFixed(0) + '</text>';
-  svg += '<text x="' + (padL - 6) + '" y="' + (padT + chartH) + '" class="chart-label" text-anchor="end">' + minV.toFixed(0) + '</text>';
+  /* Beschriftung: echte hoechste/niedrigste Werte der Daten (nicht die gepolsterte Skalengrenze),
+     auf ihrer tatsaechlichen Hoehe - genau wie bei den Einzelwert-Diagrammen. Der Schnitt liegt
+     dazwischen, mit Mindestabstand zu Max/Min. */
+  var yMaxLabel = yFor(rawMaxV), yMinLabel = yFor(rawMinV);
+  svg += '<text x="' + (padL - 6) + '" y="' + (yMaxLabel + 3).toFixed(1) + '" class="chart-label" text-anchor="end">' + rawMaxV.toFixed(0) + '</text>';
   if (showAvgLine) {
-    var loL = padT + 4 + 10, hiL = padT + chartH - 10;
-    var yAvgLabel = loL <= hiL ? Math.min(Math.max(yAvg + 3, loL), hiL) : yAvg + 3;
-    svg += '<text x="' + (padL - 6) + '" y="' + yAvgLabel.toFixed(1) + '" class="chart-label chart-label--avg" text-anchor="end">Ø ' + Math.round(avgAll) + '</text>';
+    var minGap = 10, loL = yMaxLabel + minGap, hiL = yMinLabel - minGap;
+    var yAvgLabel = loL <= hiL ? Math.min(Math.max(yAvg, loL), hiL) : (yMaxLabel + yMinLabel) / 2;
+    svg += '<text x="' + (padL - 6) + '" y="' + (yAvgLabel + 3).toFixed(1) + '" class="chart-label chart-label--avg" text-anchor="end">Ø ' + Math.round(avgAll) + '</text>';
   }
+  svg += '<text x="' + (padL - 6) + '" y="' + (yMinLabel + 3).toFixed(1) + '" class="chart-label" text-anchor="end">' + rawMinV.toFixed(0) + '</text>';
   if (n > 0) {
     svg += '<text x="' + padL + '" y="' + (padT + chartH + 14) + '" class="chart-label" text-anchor="start">' + formatDateShort(axisEntries[0].date) + '</text>';
     svg += '<text x="' + (padL + chartW) + '" y="' + (padT + chartH + 14) + '" class="chart-label" text-anchor="end">' + formatDateShort(axisEntries[n - 1].date) + '</text>';
