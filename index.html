@@ -230,11 +230,16 @@ textarea.text-input { resize: vertical; min-height: 44px; line-height: 1.4; }
 .chart-label--avg { font-weight: 600; }
 .chart-empty { padding: 20px 0; text-align: center; color: var(--color-ink-faint); font-size: 13px; }
 .chart-hint { font-size: 11px; color: var(--color-ink-faint); text-align: center; margin: -4px 0 4px; }
-.chart-legend { display: flex; gap: 14px; justify-content: center; font-size: 10.5px; color: var(--color-ink-faint); margin-top: 4px; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: center; font-size: 10.5px; color: var(--color-ink-faint); margin-top: 4px; }
 .chart-legend__item { display: inline-flex; align-items: center; gap: 4px; }
 .chart-legend__swatch { display: inline-block; width: 14px; height: 0; border-top: 2px solid; }
 .chart-legend__swatch--avg { border-top-style: solid; border-top-color: var(--color-ink-faint); opacity: 0.7; }
 .chart-legend__swatch--trend { border-top-style: dashed; }
+.chart-point--wettkampf { fill: var(--color-primary); stroke: #fff; stroke-width: 1.75; }
+.chart-point--training { fill: var(--color-accent); stroke: #fff; stroke-width: 1; }
+.chart-legend__dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+.chart-legend__dot--wettkampf { background: var(--color-primary); width: 10px; height: 10px; }
+.chart-legend__dot--training { background: var(--color-accent); }
 
 /* Settings / Mehr view */
 .settings-section { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 16px; margin-bottom: 14px; }
@@ -381,7 +386,32 @@ function lanesToFormLanes(lanes) {
 }
 
 function isCustomMode(modeId) { return !CLASSIC_MODES[modeId]; }
+/* Statistik-Modus "Gesamt": 100 und 120 Wurf zusammen, alle Werte auf Holz pro Wurf
+   umgerechnet, damit unterschiedliche Wurfanzahlen vergleichbar werden. Eigene
+   Trainingsmodi sind bewusst nicht dabei (andere Wurfarten, wuerden den Schnitt verfaelschen). */
+var STATS_MODE_GESAMT = 'gesamt';
+function isStatsGesamt() { return state.statsModeId === STATS_MODE_GESAMT; }
+function matchesStatsMode(e) { return isStatsGesamt() ? !!CLASSIC_MODES[e.modeId] : e.modeId === state.statsModeId; }
+/* Holz pro Wurf je Wurfart: Volle-Holz / Volle-Wuerfe, Abraeumer-Holz / Abraeumer-Wuerfe,
+   Gesamt / alle Wuerfe; Fehlwuerfe auf 100 Wuerfe umgerechnet. */
+function getEntryPerThrowStats(entry) {
+  var mode = CLASSIC_MODES[entry.modeId];
+  if (!mode || !entry.lanes || !entry.lanes.length) return null;
+  var s = getEntryStats(entry);
+  var n = entry.lanes.length;
+  var totalThrows = n * mode.totalThrows, volleThrows = n * mode.volleThrows, raeumThrows = totalThrows - volleThrows;
+  return {
+    gesamt: s.totalScore / totalThrows,
+    volle: s.totalVolle / volleThrows,
+    abraeumer: s.totalAbraeumer / raeumThrows,
+    fehlPer100: s.totalFehlwuerfe / totalThrows * 100
+  };
+}
+/* Kennzahl, mit der Kacheln/Vergleich/Orte rechnen: Punkte im Einzelmodus, Holz/Wurf im Gesamt-Modus. */
+function statValueForEntry(e) { return isStatsGesamt() ? getEntryPerThrowStats(e).gesamt : getEntryStats(e).totalScore; }
+function formatStatValue(v) { return isStatsGesamt() ? v.toFixed(2) : String(Math.round(v)); }
 function getModeName(modeId) {
+  if (modeId === STATS_MODE_GESAMT) return 'Gesamt (100 + 120 Wurf)';
   if (CLASSIC_MODES[modeId]) return CLASSIC_MODES[modeId].name;
   var cm = state.customModes.find(function (m) { return m.id === modeId; });
   return cm ? cm.name : 'Gelöschter Modus';
@@ -493,7 +523,7 @@ async function loadData() {
   state.locations.sort();
   if (changed) persistLocations();
 
-  if (!CLASSIC_MODES[state.statsModeId] && !state.customModes.some(function (m) { return m.id === state.statsModeId; })) {
+  if (state.statsModeId !== STATS_MODE_GESAMT && !CLASSIC_MODES[state.statsModeId] && !state.customModes.some(function (m) { return m.id === state.statsModeId; })) {
     state.statsModeId = 'klassisch120';
   }
 
@@ -599,12 +629,11 @@ function isInDateRange(date) {
   return true;
 }
 
-/* Statistik nutzt immer genau einen Modus (statsModeId), nie "alle" - unterschiedliche
-   Modi haben unterschiedliche Wurfanzahlen und sind sonst nicht vergleichbar. */
+/* Statistik nutzt einen Modus (statsModeId) oder "Gesamt" (100 + 120 Wurf in Holz pro Wurf). */
 function applyStatsFilters(entries) {
   var f = state.filters;
   return entries.filter(function (e) {
-    if (e.modeId !== state.statsModeId) return false;
+    if (!matchesStatsMode(e)) return false;
     if (f.type !== 'alle' && e.type !== f.type) return false;
     if (f.location !== 'alle' && e.location !== f.location) return false;
     return isInDateRange(e.date);
@@ -613,7 +642,7 @@ function applyStatsFilters(entries) {
 function applyFiltersIgnoringType(entries) {
   var f = state.filters;
   return entries.filter(function (e) {
-    if (e.modeId !== state.statsModeId) return false;
+    if (!matchesStatsMode(e)) return false;
     if (f.location !== 'alle' && e.location !== f.location) return false;
     return isInDateRange(e.date);
   });
@@ -621,7 +650,7 @@ function applyFiltersIgnoringType(entries) {
 function applyFiltersIgnoringLocation(entries) {
   var f = state.filters;
   return entries.filter(function (e) {
-    if (e.modeId !== state.statsModeId) return false;
+    if (!matchesStatsMode(e)) return false;
     if (f.type !== 'alle' && e.type !== f.type) return false;
     return isInDateRange(e.date);
   });
@@ -677,7 +706,9 @@ function sortEntries(entries) {
 function currentAccentColor() {
   if (state.filters.type === 'training') return 'var(--color-accent)';
   if (state.filters.type === 'wettkampf') return 'var(--color-primary)';
-  return 'var(--color-ink)';
+  /* Bei "Alle" eine mittlere graue Linie, damit die farbigen Wettkampf-/Trainingspunkte
+     sichtbar herausstechen (auf fast schwarzer Linie waere das dunkle Gruen kaum zu sehen). */
+  return 'var(--color-ink-soft)';
 }
 
 /* `entries` muss bereits chronologisch sortiert sein (ein Eintrag = ein fester Platz auf der
@@ -715,8 +746,8 @@ function computeTypeComparison(entries) {
   var tr = entries.filter(function (e) { return e.type === 'training'; });
   function avg(arr) {
     if (arr.length === 0) return null;
-    var sum = arr.reduce(function (s, e) { return s + getEntryStats(e).totalScore; }, 0);
-    return Math.round(sum / arr.length);
+    var sum = arr.reduce(function (s, e) { return s + statValueForEntry(e); }, 0);
+    return formatStatValue(sum / arr.length);
   }
   return { wettkampfAvg: avg(wk), wettkampfCount: wk.length, trainingAvg: avg(tr), trainingCount: tr.length };
 }
@@ -727,10 +758,10 @@ function computeLocationStats(entries) {
     var loc = e.location || '(ohne Ort)';
     if (!map[loc]) map[loc] = { count: 0, sum: 0 };
     map[loc].count++;
-    map[loc].sum += getEntryStats(e).totalScore;
+    map[loc].sum += statValueForEntry(e);
   });
-  var arr = Object.keys(map).map(function (loc) { return { location: loc, count: map[loc].count, avg: Math.round(map[loc].sum / map[loc].count) }; });
-  arr.sort(function (a, b) { return b.avg - a.avg; });
+  var arr = Object.keys(map).map(function (loc) { var a = map[loc].sum / map[loc].count; return { location: loc, count: map[loc].count, avgRaw: a, avg: formatStatValue(a) }; });
+  arr.sort(function (a, b) { return b.avgRaw - a.avgRaw; });
   return arr;
 }
 
@@ -753,8 +784,10 @@ function renderLineChartSVG(data, options) {
   var points = data.map(function (d, i) {
     var x = n === 1 ? padL + chartW / 2 : padL + (i / (n - 1)) * chartW;
     var y = yForValue(d.value);
-    return { x: x, y: y, value: d.value, date: d.date, id: d.id };
+    return { x: x, y: y, value: d.value, date: d.date, id: d.id, type: d.type };
   });
+  var dec = options.decimals || 0;
+  function fmt(v) { return dec ? v.toFixed(dec) : v.toFixed(0); }
   var pathD = points.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
   var areaD = pathD + ' L' + points[n - 1].x.toFixed(1) + ',' + (padT + chartH).toFixed(1) + ' L' + points[0].x.toFixed(1) + ',' + (padT + chartH).toFixed(1) + ' Z';
 
@@ -794,21 +827,32 @@ function renderLineChartSVG(data, options) {
       svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="7.5" class="chart-point-selected" style="stroke:' + color + '" />';
     }
     if (p.id) svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="13" fill="transparent" data-action="show-point-detail" data-id="' + p.id + '" style="cursor:pointer" />';
-    svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3" style="fill:' + color + '" pointer-events="none"><title>' + escapeHtml(p.date) + ': ' + p.value + '</title></circle>';
+    /* Punkte nach Typ einfaerben wie im Verlauf: Wettkampf gruen und groesser (hervorgehoben),
+       Training in der Trainingsfarbe. Ohne Typ-Info (z. B. Tests) bleibt die Linienfarbe. */
+    var tip = '<title>' + escapeHtml(p.date) + (p.type ? ' (' + (p.type === 'wettkampf' ? 'Wettkampf' : 'Training') + ')' : '') + ': ' + fmt(p.value) + '</title>';
+    if (p.type === 'wettkampf') {
+      svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="5" class="chart-point chart-point--wettkampf" pointer-events="none">' + tip + '</circle>';
+    } else if (p.type === 'training') {
+      svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3" class="chart-point chart-point--training" pointer-events="none">' + tip + '</circle>';
+    } else {
+      svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3" style="fill:' + color + '" pointer-events="none">' + tip + '</circle>';
+    }
   });
+  var hasWk = points.some(function (p) { return p.type === 'wettkampf'; });
+  var hasTr = points.some(function (p) { return p.type === 'training'; });
 
   /* Beschriftung: echte höchste/niedrigste Werte der Daten (nicht die gepolsterte
      Skalengrenze), positioniert auf ihrer tatsächlichen Höhe im Diagramm. Der Schnitt
      bekommt eine eigene Beschriftung dazwischen, mit Mindestabstand zu Max/Min. */
   var yMaxLabel = yForValue(rawMaxV), yMinLabel = yForValue(rawMinV);
-  svg += '<text x="' + (padL - 6) + '" y="' + (yMaxLabel + 3).toFixed(1) + '" class="chart-label" text-anchor="end">' + rawMaxV.toFixed(0) + '</text>';
+  svg += '<text x="' + (padL - 6) + '" y="' + (yMaxLabel + 3).toFixed(1) + '" class="chart-label" text-anchor="end">' + fmt(rawMaxV) + '</text>';
   if (showAvgLine) {
     var minGap = 10;
     var lo = yMaxLabel + minGap, hi = yMinLabel - minGap;
     var yAvgLabel = lo <= hi ? Math.min(Math.max(yAvg, lo), hi) : (yMaxLabel + yMinLabel) / 2;
-    svg += '<text x="' + (padL - 6) + '" y="' + (yAvgLabel + 3).toFixed(1) + '" class="chart-label chart-label--avg" text-anchor="end">Ø ' + Math.round(avgV) + '</text>';
+    svg += '<text x="' + (padL - 6) + '" y="' + (yAvgLabel + 3).toFixed(1) + '" class="chart-label chart-label--avg" text-anchor="end">Ø ' + (dec ? avgV.toFixed(dec) : Math.round(avgV)) + '</text>';
   }
-  svg += '<text x="' + (padL - 6) + '" y="' + (yMinLabel + 3).toFixed(1) + '" class="chart-label" text-anchor="end">' + rawMinV.toFixed(0) + '</text>';
+  svg += '<text x="' + (padL - 6) + '" y="' + (yMinLabel + 3).toFixed(1) + '" class="chart-label" text-anchor="end">' + fmt(rawMinV) + '</text>';
   svg += '<text x="' + padL + '" y="' + (height - 6) + '" class="chart-label" text-anchor="start">' + formatDateShort(data[0].date) + '</text>';
   svg += '<text x="' + (padL + chartW) + '" y="' + (height - 6) + '" class="chart-label" text-anchor="end">' + formatDateShort(data[n - 1].date) + '</text>';
   svg += '</svg>';
@@ -818,8 +862,10 @@ function renderLineChartSVG(data, options) {
      neutral) sehen sich als zwei gestrichelte Linien sonst zu ähnlich - Legende macht
      eindeutig, welche Linie welchen Wert zeigt. */
   var showTrendLine = options.showTrend && n >= 3;
-  if (showAvgLine || showTrendLine) {
+  if (showAvgLine || showTrendLine || hasWk || hasTr) {
     var legend = '<div class="chart-legend">';
+    if (hasWk) legend += '<span class="chart-legend__item"><span class="chart-legend__dot chart-legend__dot--wettkampf"></span>Wettkampf</span>';
+    if (hasTr) legend += '<span class="chart-legend__item"><span class="chart-legend__dot chart-legend__dot--training"></span>Training</span>';
     if (showAvgLine) legend += '<span class="chart-legend__item"><span class="chart-legend__swatch chart-legend__swatch--avg"></span>Schnitt</span>';
     if (showTrendLine) legend += '<span class="chart-legend__item"><span class="chart-legend__swatch chart-legend__swatch--trend" style="border-top-color:' + color + '"></span>Trend (laufender Schnitt)</span>';
     legend += '</div>';
@@ -998,11 +1044,11 @@ function renderFilterBar() {
   return html;
 }
 
-/* Statistik hat immer genau einen Modus ausgewaehlt (kein "Alle Modi"), da unterschiedliche
-   Modi unterschiedliche Wurfanzahlen haben und in einem Diagramm nicht vergleichbar waeren. */
+/* Modusauswahl: "Gesamt" (100 + 120 Wurf, in Holz pro Wurf) oder genau ein Modus. */
 function renderStatsFilterBar() {
   var f = state.filters;
-  var modeOptions = '<option value="klassisch120"' + (state.statsModeId === 'klassisch120' ? ' selected' : '') + '>' + CLASSIC_MODES.klassisch120.name + '</option>' +
+  var modeOptions = '<option value="' + STATS_MODE_GESAMT + '"' + (isStatsGesamt() ? ' selected' : '') + '>Gesamt (Holz/Wurf)</option>' +
+    '<option value="klassisch120"' + (state.statsModeId === 'klassisch120' ? ' selected' : '') + '>' + CLASSIC_MODES.klassisch120.name + '</option>' +
     '<option value="klassisch100"' + (state.statsModeId === 'klassisch100' ? ' selected' : '') + '>' + CLASSIC_MODES.klassisch100.name + '</option>';
   state.customModes.forEach(function (m) { modeOptions += '<option value="' + m.id + '"' + (state.statsModeId === m.id ? ' selected' : '') + '>' + escapeHtml(m.name) + '</option>'; });
 
@@ -1164,14 +1210,14 @@ function renderLocationStatsBlock(entries) {
   if (state.filters.location !== 'alle') return '';
   var stats = computeLocationStats(entries);
   if (stats.length < 2) return '';
-  var html = '<div class="chart-block"><div class="chart-block__title">Schnitt nach Ort/Bahn</div><div class="location-stats-list">';
+  var html = '<div class="chart-block"><div class="chart-block__title">Schnitt nach Ort/Bahn' + (isStatsGesamt() ? ' (Holz/Wurf)' : '') + '</div><div class="location-stats-list">';
   stats.forEach(function (s) { html += '<div class="location-stats-row"><span>' + escapeHtml(s.location) + '</span><span class="location-stats-row__value">' + s.avg + ' <span class="hint">(' + s.count + ')</span></span></div>'; });
   html += '</div></div>';
   return html;
 }
 
 function renderGoalProgress() {
-  if (!state.goal) return '';
+  if (!state.goal || isStatsGesamt()) return '';
   var relevant = state.entries.filter(function (e) { return e.modeId === state.goal.modeId; });
   if (relevant.length === 0) return '';
   var scores = relevant.map(function (e) { return getEntryStats(e).totalScore; });
@@ -1305,10 +1351,15 @@ function renderStatistikView() {
     return html;
   }
 
-  var statsArr = sorted.map(function (e) { var s = getEntryStats(e); s.date = e.date; s.id = e.id; return s; });
-  var scores = statsArr.map(function (s) { return s.totalScore; });
-  var avg = Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length);
-  var best = Math.max.apply(null, scores);
+  var gesamtMode = isStatsGesamt();
+  var statsArr = sorted.map(function (e) {
+    var s = getEntryStats(e); s.date = e.date; s.id = e.id; s.type = e.type;
+    if (gesamtMode) s.pt = getEntryPerThrowStats(e);
+    return s;
+  });
+  var scores = statsArr.map(function (s) { return gesamtMode ? s.pt.gesamt : s.totalScore; });
+  var avg = formatStatValue(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length);
+  var best = formatStatValue(Math.max.apply(null, scores));
   var perThrowValues = statsArr.map(function (s) { return s.perThrow; }).filter(function (v) { return v !== null; });
   var avgPerThrow = perThrowValues.length ? (perThrowValues.reduce(function (a, b) { return a + b; }, 0) / perThrowValues.length) : null;
   var sel = state.selectedChartEntryId;
@@ -1324,14 +1375,17 @@ function renderStatistikView() {
     breakdownToggleRendered = true;
     return renderBreakdownToggle();
   }
+  function ptPoints(field) { return statsArr.map(function (s) { return { date: s.date, value: s.pt[field], id: s.id, type: s.type }; }); }
   function renderGesamtBlock() {
+    if (gesamtMode) return renderChartBlock('Gesamt – Holz pro Wurf', ptPoints('gesamt'), { showTrend: true, highlightBest: true, selectedId: sel, decimals: 2 });
     var out = withVolle.length > 0 ? breakdownToggleOnce() : '';
     if (withVolle.length > 0 && state.statsBreakdown === 'pro-bahn') {
       return out + renderMultiChartBlock('Gesamtpunkte', buildLaneSeries(withVolle, 'total'), { selectedId: sel }, withVolle);
     }
-    return out + renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id }; }), { showTrend: true, highlightBest: true, selectedId: sel });
+    return out + renderChartBlock('Gesamtpunkte', statsArr.map(function (s) { return { date: s.date, value: s.totalScore, id: s.id, type: s.type }; }), { showTrend: true, highlightBest: true, selectedId: sel });
   }
   function renderVolleOrAbraeumerBlock(which) {
+    if (gesamtMode) return renderChartBlock((which === 'volle' ? 'Volle' : 'Abräumer') + ' – Holz pro Wurf', ptPoints(which), { showTrend: true, selectedId: sel, decimals: 2 });
     if (withVolle.length === 0) return '';
     var out = breakdownToggleOnce();
     var title = which === 'volle' ? 'Volle' : 'Abräumer';
@@ -1339,23 +1393,27 @@ function renderStatistikView() {
       out += renderMultiChartBlock(title, buildLaneSeries(withVolle, which), { selectedId: sel }, withVolle);
     } else {
       var field = which === 'volle' ? 'totalVolle' : 'totalAbraeumer';
-      out += renderChartBlock(title, withVolleStats.map(function (s) { return { date: s.date, value: s[field], id: s.id }; }), { showTrend: true, selectedId: sel });
+      out += renderChartBlock(title, withVolleStats.map(function (s) { return { date: s.date, value: s[field], id: s.id, type: s.type }; }), { showTrend: true, selectedId: sel });
     }
     return out;
   }
 
   var itemRenderers = {
     'tile-count': { kind: 'tile', html: function () { return tileHtml(scores.length, 'Einträge'); } },
-    'tile-avg': { kind: 'tile', html: function () { return tileHtml(avg, 'Schnitt'); } },
-    'tile-best': { kind: 'tile', html: function () { return tileHtml(best, 'Beste Punktzahl'); } },
-    'tile-perthrow': { kind: 'tile', html: function () { return avgPerThrow !== null ? tileHtml(avgPerThrow.toFixed(2), 'Schnitt/Wurf') : ''; } },
+    'tile-avg': { kind: 'tile', html: function () { return tileHtml(avg, gesamtMode ? 'Schnitt Holz/Wurf' : 'Schnitt'); } },
+    'tile-best': { kind: 'tile', html: function () { return tileHtml(best, gesamtMode ? 'Bester Holz/Wurf' : 'Beste Punktzahl'); } },
+    /* Im Gesamt-Modus waere diese Kachel identisch mit "Schnitt Holz/Wurf" - daher dort weggelassen. */
+    'tile-perthrow': { kind: 'tile', html: function () { return (!gesamtMode && avgPerThrow !== null) ? tileHtml(avgPerThrow.toFixed(2), 'Schnitt/Wurf') : ''; } },
     'global-perthrow': { kind: 'block', html: renderGlobalPerThrowBlock },
     'ziel': { kind: 'block', html: renderGoalProgress },
     'vergleich': { kind: 'block', html: function () { return renderTypeComparisonBlock(applyFiltersIgnoringType(state.entries)); } },
     'chart-gesamt': { kind: 'block', html: renderGesamtBlock },
     'chart-volle': { kind: 'block', html: function () { return renderVolleOrAbraeumerBlock('volle'); } },
     'chart-abraeumer': { kind: 'block', html: function () { return renderVolleOrAbraeumerBlock('abraeumer'); } },
-    'chart-fehlwuerfe': { kind: 'block', html: function () { return withFehl.length > 0 ? renderChartBlock('Fehlwürfe', withFehl.map(function (s) { return { date: s.date, value: s.totalFehlwuerfe, id: s.id }; }), { showTrend: true, selectedId: sel }) : ''; } },
+    'chart-fehlwuerfe': { kind: 'block', html: function () {
+      if (gesamtMode) return renderChartBlock('Fehlwürfe pro 100 Würfe', ptPoints('fehlPer100'), { showTrend: true, selectedId: sel, decimals: 1 });
+      return withFehl.length > 0 ? renderChartBlock('Fehlwürfe', withFehl.map(function (s) { return { date: s.date, value: s.totalFehlwuerfe, id: s.id, type: s.type }; }), { showTrend: true, selectedId: sel }) : '';
+    } },
     'ort-stats': { kind: 'block', html: function () { return renderLocationStatsBlock(applyFiltersIgnoringLocation(state.entries)); } }
   };
 
